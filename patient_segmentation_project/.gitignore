@@ -1,0 +1,95 @@
+# Data files
+*.csv
+*.xlsx
+*.xls
+*.json
+*.parquet
+*.feather
+*.pkl
+*.pickle
+
+# Data directories
+2_data_acquisition/raw_data/*
+2_data_acquisition/processed_data/*
+!2_data_acquisition/raw_data/.gitkeep
+!2_data_acquisition/processed_data/.gitkeep
+
+# Model files
+models/*
+*.h5
+*.pt
+*.pth
+*.onnx
+!models/.gitkeep
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Kaggle credentials
+kaggle.json
+
+# Logs
+*.log
+logs/
+*.out
+
+# Reports and outputs
+reports/*.html
+reports/*.pdf
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Environment variables
+.env
+.env.local
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
