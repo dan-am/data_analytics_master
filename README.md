@@ -1,6 +1,19 @@
 # data_analytics_master
 This is the repo for the masters course DAMI01 / DATA01 Data Analytics
 
+## 📚 Resources
+
+### Dataset Recommendations
+Looking for interesting datasets for your seminar paper? Check out our comprehensive guide:
+
+**[Dataset Recommendations Guide](dataset_recommendations.md)** - Curated datasets for:
+- 🔍 Clustering Analysis
+- 🛒 Market Basket Analysis (Warenkorbanalyse)
+- 💰 Financial Data & KYC Analysis
+- 🎯 Classification Tasks
+
+The guide focuses on less commonly used but comprehensive datasets suitable for academic work.
+
 ## Projects
 
 ### Patient Segmentation Project
