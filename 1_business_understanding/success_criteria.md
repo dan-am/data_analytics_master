@@ -1,150 +1,150 @@
-# Success Criteria for Patient Segmentation Project
+# Erfolgskriterien für das Patientensegmentierungsprojekt
 
-## Overview
-This document defines the measurable success criteria for the patient segmentation analysis project across all phases of the Data Science Life Cycle.
+## Überblick
+Dieses Dokument definiert die messbaren Erfolgskriterien für das Patientensegmentierungs-Analyseprojekt über alle Phasen des Data-Science-Lebenszyklus hinweg.
 
-## Phase-Specific Success Criteria
+## Phasenspezifische Erfolgskriterien
 
-### Phase 1: Business Understanding
-- [ ] Project charter completed and approved
-- [ ] Clear problem statement documented
-- [ ] Success metrics defined
-- [ ] Stakeholder requirements gathered
+### Phase 1: Geschäftsverständnis
+- [ ] Projektcharta erstellt und genehmigt
+- [ ] Klare Problemstellung dokumentiert
+- [ ] Erfolgsmetriken definiert
+- [ ] Stakeholder-Anforderungen erhoben
 
-### Phase 2: Data Acquisition
-- [ ] Patient segmentation dataset successfully downloaded
-- [ ] Data source documented with metadata
-- [ ] Data dictionary created
-- [ ] Initial data quality assessment completed
+### Phase 2: Datenanschaffung
+- [ ] Patientensegmentierungs-Datensatz erfolgreich heruntergeladen
+- [ ] Datenquelle mit Metadaten dokumentiert
+- [ ] Datenwörterbuch erstellt
+- [ ] Erste Datenqualitätsbewertung durchgeführt
 
-### Phase 3: Data Preparation
-- [ ] Missing value handling strategy implemented
-- [ ] Outlier detection and treatment completed
-- [ ] Data validation rules applied
-- [ ] Clean dataset ready for analysis
-- [ ] Data quality report generated
+### Phase 3: Datenvorbereitung
+- [ ] Strategie zur Behandlung fehlender Werte implementiert
+- [ ] Ausreißererkennung und -behandlung durchgeführt
+- [ ] Datenvalidierungsregeln angewendet
+- [ ] Bereinigter Datensatz analysefertig
+- [ ] Datenqualitätsbericht erstellt
 
-### Phase 4: Exploratory Data Analysis
-- [ ] Univariate analysis completed for all features
-- [ ] Bivariate/multivariate analysis performed
-- [ ] Key patterns and insights documented
-- [ ] Visualization dashboard created
-- [ ] Statistical summary generated
+### Phase 4: Explorative Datenanalyse
+- [ ] Univariate Analyse für alle Features durchgeführt
+- [ ] Bivariate/multivariate Analyse durchgeführt
+- [ ] Wesentliche Muster und Erkenntnisse dokumentiert
+- [ ] Visualisierungs-Dashboard erstellt
+- [ ] Statistische Zusammenfassung erstellt
 
 ### Phase 5: Feature Engineering
-- [ ] Relevant features created from raw data
-- [ ] Feature importance analysis completed
-- [ ] Feature selection performed
-- [ ] Engineered features validated
-- [ ] Feature engineering pipeline documented
+- [ ] Relevante Features aus Rohdaten erstellt
+- [ ] Feature-Importance-Analyse durchgeführt
+- [ ] Feature-Selektion durchgeführt
+- [ ] Erstellte Features validiert
+- [ ] Feature-Engineering-Pipeline dokumentiert
 
-### Phase 6: Modeling
-- [ ] Multiple algorithms tested (minimum 3)
-- [ ] Hyperparameter tuning completed
-- [ ] Best model selected based on metrics
-- [ ] Model assumptions validated
-- [ ] Training process documented
+### Phase 6: Modellierung
+- [ ] Mehrere Algorithmen getestet (mindestens 3)
+- [ ] Hyperparameter-Tuning durchgeführt
+- [ ] Bestes Modell anhand von Metriken ausgewählt
+- [ ] Modellannahmen validiert
+- [ ] Trainingsprozess dokumentiert
 
 ### Phase 7: Evaluation
-- [ ] Model performance metrics calculated
-- [ ] Cross-validation performed
-- [ ] Model comparison completed
-- [ ] Segment interpretability assessed
-- [ ] Evaluation report generated
+- [ ] Modellleistungsmetriken berechnet
+- [ ] Kreuzvalidierung durchgeführt
+- [ ] Modellvergleich durchgeführt
+- [ ] Interpretierbarkeit der Segmente bewertet
+- [ ] Evaluationsbericht erstellt
 
 ### Phase 8: Deployment
-- [ ] Deployment strategy documented
-- [ ] Inference script created
-- [ ] API documentation completed (if applicable)
-- [ ] Monitoring plan defined
-- [ ] User guide created
+- [ ] Deployment-Strategie dokumentiert
+- [ ] Inferenz-Skript erstellt
+- [ ] API-Dokumentation erstellt (falls zutreffend)
+- [ ] Monitoring-Plan definiert
+- [ ] Benutzerhandbuch erstellt
 
-## Model Performance Metrics
+## Modellleistungsmetriken
 
-### Clustering Models (if using unsupervised approach)
-- **Silhouette Score:** ≥ 0.5 (good cluster separation)
-- **Davies-Bouldin Index:** < 1.0 (compact and well-separated clusters)
-- **Calinski-Harabasz Score:** Higher is better (variance ratio criterion)
-- **Inertia:** Elbow method for optimal number of clusters
+### Clustering-Modelle (unüberwachter Ansatz)
+- **Silhouette-Score:** ≥ 0.5 (gute Cluster-Trennung)
+- **Davies-Bouldin-Index:** < 1.0 (kompakte und gut getrennte Cluster)
+- **Calinski-Harabasz-Score:** Höher ist besser (Varianz-Verhältnis-Kriterium)
+- **Trägheit:** Elbow-Methode für optimale Clusteranzahl
 
-### Classification Models (if using supervised approach)
-- **Accuracy:** ≥ 0.85
-- **F1-Score:** ≥ 0.80 (balanced precision and recall)
+### Klassifikationsmodelle (überwachter Ansatz)
+- **Genauigkeit:** ≥ 0.85
+- **F1-Score:** ≥ 0.80 (ausgewogene Präzision und Recall)
 - **AUC-ROC:** ≥ 0.85
-- **Confusion Matrix:** Minimize false positives and false negatives
+- **Konfusionsmatrix:** Falsch-Positive und Falsch-Negative minimieren
 
-## Data Quality Metrics
+## Datenqualitätsmetriken
 
-- **Completeness:** ≥ 95% of records with complete information
-- **Consistency:** 100% data type consistency
-- **Validity:** 100% adherence to validation rules
-- **Uniqueness:** No duplicate patient records
+- **Vollständigkeit:** ≥ 95 % der Datensätze mit vollständigen Informationen
+- **Konsistenz:** 100 % Datentypkonsistenz
+- **Gültigkeit:** 100 % Einhaltung der Validierungsregeln
+- **Eindeutigkeit:** Keine doppelten Patientendatensätze
 
-## Business Impact Metrics
+## Geschäftsauswirkungsmetriken
 
-### Segment Quality
-- [ ] Each segment has distinct characteristics
-- [ ] Segments are actionable for healthcare providers
-- [ ] Segment sizes are balanced (no segment < 5% of total)
-- [ ] Segments are stable across different random seeds
+### Segmentqualität
+- [ ] Jedes Segment hat unterscheidbare Merkmale
+- [ ] Segmente sind für Gesundheitsdienstleister umsetzbar
+- [ ] Segmentgrößen sind ausgewogen (kein Segment < 5 % der Gesamtzahl)
+- [ ] Segmente sind über verschiedene Zufallsseeds stabil
 
-### Interpretability
-- [ ] Clear profile for each patient segment
-- [ ] Key differentiating features identified
-- [ ] Recommendations provided for each segment
-- [ ] Visualizations support segment understanding
+### Interpretierbarkeit
+- [ ] Klares Profil für jedes Patientensegment
+- [ ] Wichtigste Unterscheidungsmerkmale identifiziert
+- [ ] Empfehlungen für jedes Segment bereitgestellt
+- [ ] Visualisierungen unterstützen das Segmentverständnis
 
-## Technical Quality Metrics
+## Technische Qualitätsmetriken
 
-### Code Quality
-- [ ] Code follows PEP 8 style guidelines
-- [ ] Functions are documented with docstrings
-- [ ] Scripts are modular and reusable
-- [ ] Version control used throughout
+### Code-Qualität
+- [ ] Code folgt PEP-8-Stilrichtlinien
+- [ ] Funktionen mit Docstrings dokumentiert
+- [ ] Skripte sind modular und wiederverwendbar
+- [ ] Versionskontrolle durchgehend genutzt
 
-### Reproducibility
-- [ ] Random seeds set for reproducible results
-- [ ] Environment requirements documented
-- [ ] Data pipeline can be re-run successfully
-- [ ] Results can be replicated by others
+### Reproduzierbarkeit
+- [ ] Zufallsseeds für reproduzierbare Ergebnisse gesetzt
+- [ ] Umgebungsanforderungen dokumentiert
+- [ ] Daten-Pipeline kann erneut ausgeführt werden
+- [ ] Ergebnisse können von anderen repliziert werden
 
-### Documentation
-- [ ] README files in each phase folder
-- [ ] Code comments for complex logic
-- [ ] Analysis decisions documented
-- [ ] References and sources cited
+### Dokumentation
+- [ ] README-Dateien in jedem Phasenordner
+- [ ] Code-Kommentare für komplexe Logik
+- [ ] Analyseentscheidungen dokumentiert
+- [ ] Referenzen und Quellen zitiert
 
-## Timeline Success Criteria
+## Zeitplan-Erfolgskriterien
 
-- [ ] All 8 phases completed within planned timeline
-- [ ] Weekly progress reports submitted
-- [ ] Milestones achieved on schedule
-- [ ] Final deliverables submitted on time
+- [ ] Alle 8 Phasen innerhalb des geplanten Zeitrahmens abgeschlossen
+- [ ] Wöchentliche Fortschrittsberichte eingereicht
+- [ ] Meilensteine termingerecht erreicht
+- [ ] Endergebnisse termingerecht eingereicht
 
-## Knowledge Transfer
+## Wissenstransfer
 
-- [ ] Project presentation prepared
-- [ ] Technical documentation complete
-- [ ] User guide created
-- [ ] Lessons learned documented
+- [ ] Projektpräsentation vorbereitet
+- [ ] Technische Dokumentation vollständig
+- [ ] Benutzerhandbuch erstellt
+- [ ] Lessons Learned dokumentiert
 
-## Acceptance Criteria
+## Abnahmekriterien
 
-The project will be considered successful when:
+Das Projekt gilt als erfolgreich, wenn:
 
-1. ✅ All data science lifecycle phases are completed
-2. ✅ Model performance meets minimum thresholds
-3. ✅ Patient segments are clearly defined and interpretable
-4. ✅ All deliverables are completed and documented
-5. ✅ Code is reproducible and well-documented
-6. ✅ Business insights are actionable
+1. ✅ Alle Phasen des Data-Science-Lebenszyklus abgeschlossen sind
+2. ✅ Die Modellleistung die Mindestanforderungen erfüllt
+3. ✅ Patientensegmente klar definiert und interpretierbar sind
+4. ✅ Alle Ergebnisse vollständig und dokumentiert sind
+5. ✅ Code reproduzierbar und gut dokumentiert ist
+6. ✅ Geschäftserkenntnisse umsetzbar sind
 
-## Review and Approval
+## Prüfung und Freigabe
 
-**Criteria Reviewed by:** [To be filled]
+**Kriterien geprüft von:** [Auszufüllen]
 
-**Date:** [To be filled]
+**Datum:** [Auszufüllen]
 
-**Approved:** [ ] Yes [ ] No
+**Genehmigt:** [ ] Ja [ ] Nein
 
-**Comments:** [To be filled]
+**Anmerkungen:** [Auszufüllen]

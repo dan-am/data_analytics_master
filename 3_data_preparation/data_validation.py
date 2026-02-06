@@ -1,8 +1,8 @@
 """
-Data Validation Script
-Phase 3: Data Preparation
+Datenvalidierungsskript
+Phase 3: Datenvorbereitung
 
-This script validates the quality of the patient segmentation dataset.
+Dieses Skript validiert die Qualität des Patientensegmentierungs-Datensatzes.
 """
 
 import pandas as pd
@@ -14,137 +14,137 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 
-class DataValidator:
-    """Class to validate data quality."""
+class DatenValidator:
+    """Klasse zur Validierung der Datenqualität."""
     
-    def __init__(self, data_path):
-        """Initialize DataValidator."""
-        self.data_path = Path(data_path)
+    def __init__(self, daten_pfad):
+        """DatenValidator initialisieren."""
+        self.daten_pfad = Path(daten_pfad)
         self.df = None
-        self.validation_results = {}
+        self.validierungsergebnisse = {}
         
-    def load_data(self):
-        """Load the data."""
-        logger.info(f"Loading data from {self.data_path}")
-        self.df = pd.read_csv(self.data_path)
+    def daten_laden(self):
+        """Daten laden."""
+        logger.info(f"Lade Daten von {self.daten_pfad}")
+        self.df = pd.read_csv(self.daten_pfad)
         
-    def validate_completeness(self):
-        """Check data completeness."""
-        total_cells = self.df.shape[0] * self.df.shape[1]
-        missing_cells = self.df.isnull().sum().sum()
-        completeness = ((total_cells - missing_cells) / total_cells) * 100
+    def vollstaendigkeit_validieren(self):
+        """Datenvollständigkeit prüfen."""
+        gesamt_zellen = self.df.shape[0] * self.df.shape[1]
+        fehlende_zellen = self.df.isnull().sum().sum()
+        vollstaendigkeit = ((gesamt_zellen - fehlende_zellen) / gesamt_zellen) * 100
         
-        self.validation_results['completeness'] = completeness
-        logger.info(f"Data Completeness: {completeness:.2f}%")
+        self.validierungsergebnisse['vollstaendigkeit'] = vollstaendigkeit
+        logger.info(f"Datenvollständigkeit: {vollstaendigkeit:.2f}%")
         
-        return completeness >= 95  # Pass if >= 95% complete
+        return vollstaendigkeit >= 95  # Bestanden wenn >= 95% vollständig
     
-    def validate_uniqueness(self, id_column=None):
-        """Check for duplicate records."""
-        duplicates = self.df.duplicated().sum()
-        self.validation_results['duplicates'] = duplicates
+    def eindeutigkeit_validieren(self, id_spalte=None):
+        """Auf doppelte Datensätze prüfen."""
+        duplikate = self.df.duplicated().sum()
+        self.validierungsergebnisse['duplikate'] = duplikate
         
-        if duplicates > 0:
-            logger.warning(f"Found {duplicates} duplicate records")
+        if duplikate > 0:
+            logger.warning(f"{duplikate} doppelte Datensätze gefunden")
             return False
         else:
-            logger.info("No duplicate records found ✓")
+            logger.info("Keine doppelten Datensätze gefunden ✓")
             return True
     
-    def validate_data_types(self):
-        """Validate data types are consistent."""
-        logger.info("Data Types:")
-        for col, dtype in self.df.dtypes.items():
-            logger.info(f"  {col}: {dtype}")
+    def datentypen_validieren(self):
+        """Konsistenz der Datentypen validieren."""
+        logger.info("Datentypen:")
+        for spalte, dtyp in self.df.dtypes.items():
+            logger.info(f"  {spalte}: {dtyp}")
         
-        self.validation_results['data_types'] = self.df.dtypes.to_dict()
+        self.validierungsergebnisse['datentypen'] = self.df.dtypes.to_dict()
         return True
     
-    def validate_value_ranges(self, range_rules=None):
+    def wertebereiche_validieren(self, bereichsregeln=None):
         """
-        Validate that values are within expected ranges.
+        Prüfen, ob Werte innerhalb erwarteter Bereiche liegen.
         
         Args:
-            range_rules (dict): Dictionary of column: (min, max) rules
+            bereichsregeln (dict): Wörterbuch mit Spalte: (min, max) Regeln
         """
-        if range_rules is None:
-            range_rules = {}
+        if bereichsregeln is None:
+            bereichsregeln = {}
         
-        violations = []
+        verletzungen = []
         
-        for col, (min_val, max_val) in range_rules.items():
-            if col in self.df.columns:
-                out_of_range = ((self.df[col] < min_val) | (self.df[col] > max_val)).sum()
-                if out_of_range > 0:
-                    violations.append(f"{col}: {out_of_range} values out of range [{min_val}, {max_val}]")
+        for spalte, (min_wert, max_wert) in bereichsregeln.items():
+            if spalte in self.df.columns:
+                ausserhalb = ((self.df[spalte] < min_wert) | (self.df[spalte] > max_wert)).sum()
+                if ausserhalb > 0:
+                    verletzungen.append(f"{spalte}: {ausserhalb} Werte außerhalb des Bereichs [{min_wert}, {max_wert}]")
         
-        self.validation_results['range_violations'] = violations
+        self.validierungsergebnisse['bereichsverletzungen'] = verletzungen
         
-        if violations:
-            logger.warning("Range validation violations:")
-            for v in violations:
+        if verletzungen:
+            logger.warning("Bereichsvalidierungs-Verletzungen:")
+            for v in verletzungen:
                 logger.warning(f"  {v}")
             return False
         else:
-            logger.info("All values within expected ranges ✓")
+            logger.info("Alle Werte innerhalb erwarteter Bereiche ✓")
             return True
     
-    def generate_validation_report(self):
-        """Generate a validation report."""
-        report_path = self.data_path.parent / 'validation_report.txt'
+    def validierungsbericht_erstellen(self):
+        """Validierungsbericht erstellen."""
+        bericht_pfad = self.daten_pfad.parent / 'validation_report.txt'
         
-        with open(report_path, 'w') as f:
-            f.write("Data Validation Report\n")
+        with open(bericht_pfad, 'w') as f:
+            f.write("Datenvalidierungsbericht\n")
             f.write("=" * 50 + "\n\n")
-            f.write(f"Dataset: {self.data_path.name}\n")
-            f.write(f"Rows: {self.df.shape[0]}\n")
-            f.write(f"Columns: {self.df.shape[1]}\n\n")
+            f.write(f"Datensatz: {self.daten_pfad.name}\n")
+            f.write(f"Zeilen: {self.df.shape[0]}\n")
+            f.write(f"Spalten: {self.df.shape[1]}\n\n")
             
-            for key, value in self.validation_results.items():
-                f.write(f"{key}: {value}\n")
+            for schluessel, wert in self.validierungsergebnisse.items():
+                f.write(f"{schluessel}: {wert}\n")
         
-        logger.info(f"Validation report saved to {report_path}")
+        logger.info(f"Validierungsbericht gespeichert unter {bericht_pfad}")
     
-    def validate(self, range_rules=None):
-        """Run all validation checks."""
-        self.load_data()
+    def validieren(self, bereichsregeln=None):
+        """Alle Validierungsprüfungen durchführen."""
+        self.daten_laden()
         
-        results = {
-            'completeness': self.validate_completeness(),
-            'uniqueness': self.validate_uniqueness(),
-            'data_types': self.validate_data_types(),
-            'ranges': self.validate_value_ranges(range_rules)
+        ergebnisse = {
+            'vollstaendigkeit': self.vollstaendigkeit_validieren(),
+            'eindeutigkeit': self.eindeutigkeit_validieren(),
+            'datentypen': self.datentypen_validieren(),
+            'bereiche': self.wertebereiche_validieren(bereichsregeln)
         }
         
-        self.generate_validation_report()
+        self.validierungsbericht_erstellen()
         
-        if all(results.values()):
-            logger.info("\n✓ All validation checks passed!")
+        if all(ergebnisse.values()):
+            logger.info("\n✓ Alle Validierungsprüfungen bestanden!")
             return True
         else:
-            logger.warning("\n✗ Some validation checks failed")
+            logger.warning("\n✗ Einige Validierungsprüfungen fehlgeschlagen")
             return False
 
 
 def main():
-    """Main function to run data validation."""
-    base_dir = Path(__file__).parent
-    data_file = base_dir.parent / '2_data_acquisition' / 'processed_data' / 'patient_data_cleaned.csv'
+    """Hauptfunktion zur Datenvalidierung."""
+    basis_verz = Path(__file__).parent
+    daten_datei = basis_verz.parent / '2_data_acquisition' / 'processed_data' / 'patient_data_cleaned.csv'
     
-    if not data_file.exists():
-        logger.error(f"Data file not found: {data_file}")
-        logger.error("Please run data_cleaning.py first")
+    if not daten_datei.exists():
+        logger.error(f"Datendatei nicht gefunden: {daten_datei}")
+        logger.error("Bitte zuerst data_cleaning.py ausführen")
         return
     
-    validator = DataValidator(data_file)
+    validator = DatenValidator(daten_datei)
     
-    # Define validation rules (customize based on your data)
-    range_rules = {
-        # Example: 'age': (0, 120),
-        # Example: 'blood_pressure': (60, 200),
+    # Validierungsregeln definieren (nach Bedarf anpassen)
+    bereichsregeln = {
+        # Beispiel: 'alter': (0, 120),
+        # Beispiel: 'blutdruck': (60, 200),
     }
     
-    validator.validate(range_rules=range_rules)
+    validator.validieren(bereichsregeln=bereichsregeln)
 
 
 if __name__ == '__main__':

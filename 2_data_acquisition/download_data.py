@@ -1,15 +1,15 @@
 """
-Data Download Script for Patient Segmentation Project
-Phase 2: Data Acquisition
+Daten-Download-Skript für das Patientensegmentierungsprojekt
+Phase 2: Datenanschaffung
 
-This script downloads the patient segmentation dataset from Kaggle.
+Dieses Skript lädt den Patientensegmentierungs-Datensatz von Kaggle herunter.
 
-Prerequisites:
-1. Kaggle account created
-2. Kaggle API credentials configured (~/.kaggle/kaggle.json)
-3. kaggle package installed (pip install kaggle)
+Voraussetzungen:
+1. Kaggle-Konto erstellt
+2. Kaggle-API-Zugangsdaten konfiguriert (~/.kaggle/kaggle.json)
+3. kaggle-Paket installiert (pip install kaggle)
 
-Usage:
+Verwendung:
     python download_data.py
 """
 
@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 import logging
 
-# Set up logging
+# Logging einrichten
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
@@ -26,179 +26,169 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def setup_directories():
-    """Create necessary directories for data storage."""
-    current_dir = Path(__file__).parent
-    raw_data_dir = current_dir / 'raw_data'
-    processed_data_dir = current_dir / 'processed_data'
+def verzeichnisse_einrichten():
+    """Notwendige Verzeichnisse für die Datenspeicherung erstellen."""
+    aktuelles_verz = Path(__file__).parent
+    rohdaten_verz = aktuelles_verz / 'raw_data'
+    verarbeitete_daten_verz = aktuelles_verz / 'processed_data'
     
-    raw_data_dir.mkdir(exist_ok=True)
-    processed_data_dir.mkdir(exist_ok=True)
+    rohdaten_verz.mkdir(exist_ok=True)
+    verarbeitete_daten_verz.mkdir(exist_ok=True)
     
-    logger.info(f"Data directories created/verified:")
-    logger.info(f"  - Raw data: {raw_data_dir}")
-    logger.info(f"  - Processed data: {processed_data_dir}")
+    logger.info(f"Datenverzeichnisse erstellt/überprüft:")
+    logger.info(f"  - Rohdaten: {rohdaten_verz}")
+    logger.info(f"  - Verarbeitete Daten: {verarbeitete_daten_verz}")
     
-    return raw_data_dir, processed_data_dir
+    return rohdaten_verz, verarbeitete_daten_verz
 
 
-def check_kaggle_credentials():
-    """Verify that Kaggle credentials are configured."""
+def kaggle_zugangsdaten_pruefen():
+    """Überprüft, ob die Kaggle-Zugangsdaten konfiguriert sind."""
     kaggle_json = Path.home() / '.kaggle' / 'kaggle.json'
     
     if not kaggle_json.exists():
-        logger.error("Kaggle credentials not found!")
-        logger.error("Please follow these steps:")
-        logger.error("1. Go to https://www.kaggle.com/account")
-        logger.error("2. Click 'Create New API Token'")
-        logger.error("3. Place kaggle.json in ~/.kaggle/")
-        logger.error("4. Run: chmod 600 ~/.kaggle/kaggle.json")
+        logger.error("Kaggle-Zugangsdaten nicht gefunden!")
+        logger.error("Bitte folgende Schritte ausführen:")
+        logger.error("1. https://www.kaggle.com/account aufrufen")
+        logger.error("2. 'Create New API Token' klicken")
+        logger.error("3. kaggle.json in ~/.kaggle/ ablegen")
+        logger.error("4. Ausführen: chmod 600 ~/.kaggle/kaggle.json")
         return False
     
-    logger.info("Kaggle credentials found ✓")
+    logger.info("Kaggle-Zugangsdaten gefunden ✓")
     return True
 
 
-def download_dataset(raw_data_dir):
-    """Download the patient segmentation dataset from Kaggle."""
+def datensatz_herunterladen(rohdaten_verz):
+    """Patientensegmentierungs-Datensatz von Kaggle herunterladen."""
     try:
         import kaggle
         
-        dataset_name = 'nudratabbas/patient-segmentation-data'
-        logger.info(f"Downloading dataset: {dataset_name}")
-        logger.info("This may take a few minutes...")
+        datensatz_name = 'nudratabbas/patient-segmentation-data'
+        logger.info(f"Lade Datensatz herunter: {datensatz_name}")
+        logger.info("Dies kann einige Minuten dauern...")
         
-        # Download dataset to raw_data directory
+        # Datensatz in das Rohdaten-Verzeichnis herunterladen
         kaggle.api.dataset_download_files(
-            dataset_name,
-            path=str(raw_data_dir),
+            datensatz_name,
+            path=str(rohdaten_verz),
             unzip=True
         )
         
-        logger.info("Dataset downloaded successfully! ✓")
+        logger.info("Datensatz erfolgreich heruntergeladen! ✓")
         
-        # List downloaded files
-        files = list(raw_data_dir.glob('*'))
-        logger.info(f"\nDownloaded files ({len(files)}):")
-        for file in files:
-            if file.is_file():
-                size_mb = file.stat().st_size / (1024 * 1024)
-                logger.info(f"  - {file.name} ({size_mb:.2f} MB)")
+        # Heruntergeladene Dateien auflisten
+        dateien = list(rohdaten_verz.glob('*'))
+        logger.info(f"\nHeruntergeladene Dateien ({len(dateien)}):")
+        for datei in dateien:
+            if datei.is_file():
+                groesse_mb = datei.stat().st_size / (1024 * 1024)
+                logger.info(f"  - {datei.name} ({groesse_mb:.2f} MB)")
         
         return True
         
     except ImportError:
-        logger.error("Kaggle package not installed!")
-        logger.error("Install it with: pip install kaggle")
+        logger.error("kaggle-Paket nicht installiert!")
+        logger.error("Installieren mit: pip install kaggle")
         return False
     except Exception as e:
-        logger.error(f"Error downloading dataset: {str(e)}")
+        logger.error(f"Fehler beim Herunterladen des Datensatzes: {str(e)}")
         return False
 
 
-def create_data_source_documentation(dataset_name='nudratabbas/patient-segmentation-data'):
-    """Create documentation about the data source."""
-    current_dir = Path(__file__).parent
-    doc_dir = current_dir / 'data_sources'
-    doc_dir.mkdir(exist_ok=True)
+def datenquellen_dokumentation_erstellen(datensatz_name='nudratabbas/patient-segmentation-data'):
+    """Dokumentation über die Datenquelle erstellen."""
+    aktuelles_verz = Path(__file__).parent
+    dok_verz = aktuelles_verz / 'data_sources'
+    dok_verz.mkdir(exist_ok=True)
     
-    doc_file = doc_dir / 'dataset_info.md'
+    dok_datei = dok_verz / 'dataset_info.md'
     
-    content = f"""# Patient Segmentation Dataset
+    inhalt = f"""# Patientensegmentierungs-Datensatz
 
-## Source Information
+## Quelleninformationen
 
-**Dataset Name:** Patient Segmentation Data
+**Datensatzname:** Patient Segmentation Data
 
-**Source:** Kaggle
+**Quelle:** Kaggle
 
-**URL:** https://www.kaggle.com/datasets/{dataset_name}
+**URL:** https://www.kaggle.com/datasets/{datensatz_name}
 
-**Author:** Nudrat Abbas
+**Autor:** Nudrat Abbas
 
-**License:** Check Kaggle dataset page for license information
+**Lizenz:** Lizenzinformationen auf der Kaggle-Datensatzseite prüfen
 
-**Downloaded:** {Path().cwd()}
+## Beschreibung
 
-## Description
+Dieser Datensatz enthält Patienteninformationen für Segmentierungsanalysen. Er ist für Healthcare-Analytics und Patienten-Clustering-Anwendungen konzipiert.
 
-This dataset contains patient information for segmentation analysis. It is designed for healthcare analytics and patient clustering applications.
+## Datensatz-Eigenschaften
 
-## Dataset Characteristics
-
-- **Type:** Multivariate
-- **Subject Area:** Healthcare
+- **Typ:** Multivariat
+- **Fachgebiet:** Gesundheitswesen
 - **Format:** CSV
-- **Use Case:** Patient Segmentation, Clustering Analysis
+- **Anwendungsfall:** Patientensegmentierung, Clustering-Analyse
 
-## Important Notes
+## Wichtige Hinweise
 
-1. This is a public dataset from Kaggle
-2. Check the dataset page for the most current description and license
-3. Review data privacy considerations before using in production
-4. Cite the dataset appropriately in any publications
+1. Dies ist ein öffentlicher Datensatz von Kaggle
+2. Aktuelle Beschreibung und Lizenz auf der Datensatzseite prüfen
+3. Datenschutzaspekte vor Produktionseinsatz berücksichtigen
+4. Datensatz in Veröffentlichungen korrekt zitieren
 
-## Download Date
+## Zitation
 
-Dataset was downloaded on: [Timestamp will be added during download]
+Bei Verwendung dieses Datensatzes bitte zitieren:
+- Ersteller: Nudrat Abbas
+- Quelle: Kaggle
+- URL: https://www.kaggle.com/datasets/{datensatz_name}
 
-## File Structure
+## Nächste Schritte
 
-[To be updated after download with actual file names and descriptions]
-
-## Citation
-
-If you use this dataset, please cite:
-- Dataset creator: Nudrat Abbas
-- Source: Kaggle
-- URL: https://www.kaggle.com/datasets/{dataset_name}
-
-## Next Steps
-
-After downloading:
-1. Review the data files in `raw_data/` directory
-2. Create a data dictionary documenting all fields
-3. Perform initial data quality assessment
-4. Move to Phase 3: Data Preparation
+Nach dem Download:
+1. Datendateien im `raw_data/`-Verzeichnis überprüfen
+2. Datenwörterbuch mit allen Feldern erstellen
+3. Erste Datenqualitätsbewertung durchführen
+4. Weiter zu Phase 3: Datenvorbereitung
 """
     
-    with open(doc_file, 'w') as f:
-        f.write(content)
+    with open(dok_datei, 'w') as f:
+        f.write(inhalt)
     
-    logger.info(f"Data source documentation created: {doc_file}")
+    logger.info(f"Datenquellen-Dokumentation erstellt: {dok_datei}")
 
 
 def main():
-    """Main function to orchestrate data download."""
+    """Hauptfunktion zur Orchestrierung des Daten-Downloads."""
     logger.info("="*60)
-    logger.info("Patient Segmentation Project - Data Download")
-    logger.info("Phase 2: Data Acquisition")
+    logger.info("Patientensegmentierungsprojekt – Daten-Download")
+    logger.info("Phase 2: Datenanschaffung")
     logger.info("="*60)
     
-    # Step 1: Check Kaggle credentials
-    if not check_kaggle_credentials():
+    # Schritt 1: Kaggle-Zugangsdaten prüfen
+    if not kaggle_zugangsdaten_pruefen():
         sys.exit(1)
     
-    # Step 2: Setup directories
-    raw_data_dir, processed_data_dir = setup_directories()
+    # Schritt 2: Verzeichnisse einrichten
+    rohdaten_verz, verarbeitete_daten_verz = verzeichnisse_einrichten()
     
-    # Step 3: Download dataset
-    success = download_dataset(raw_data_dir)
+    # Schritt 3: Datensatz herunterladen
+    erfolg = datensatz_herunterladen(rohdaten_verz)
     
-    if not success:
-        logger.error("Data download failed!")
+    if not erfolg:
+        logger.error("Daten-Download fehlgeschlagen!")
         sys.exit(1)
     
-    # Step 4: Create documentation
-    create_data_source_documentation()
+    # Schritt 4: Dokumentation erstellen
+    datenquellen_dokumentation_erstellen()
     
     logger.info("\n" + "="*60)
-    logger.info("Data acquisition completed successfully!")
+    logger.info("Datenanschaffung erfolgreich abgeschlossen!")
     logger.info("="*60)
-    logger.info("\nNext steps:")
-    logger.info("1. Review the downloaded data in raw_data/")
-    logger.info("2. Create a data dictionary")
-    logger.info("3. Proceed to Phase 3: Data Preparation")
+    logger.info("\nNächste Schritte:")
+    logger.info("1. Heruntergeladene Daten in raw_data/ überprüfen")
+    logger.info("2. Datenwörterbuch erstellen")
+    logger.info("3. Weiter zu Phase 3: Datenvorbereitung")
 
 
 if __name__ == '__main__':

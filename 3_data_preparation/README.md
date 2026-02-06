@@ -1,124 +1,114 @@
-# Phase 3: Data Preparation
+# Phase 3: Datenvorbereitung
 
-## Overview
-This phase focuses on cleaning and preparing the patient data for analysis.
+## Überblick
+Diese Phase konzentriert sich auf die Bereinigung und Aufbereitung der Patientendaten für die Analyse.
 
-## Objectives
-- Clean raw data
-- Handle missing values
-- Detect and treat outliers
-- Validate data quality
-- Create preprocessing pipeline
+## Ziele
+- Rohdaten bereinigen
+- Fehlende Werte behandeln
+- Ausreißer erkennen und behandeln
+- Datenqualität validieren
+- Vorverarbeitungs-Pipeline erstellen
 
-## Scripts
+## Skripte
 
 ### 1. data_cleaning.py
-Performs comprehensive data cleaning:
-- Removes duplicates
-- Handles missing values
-- Detects outliers
-- Standardizes column names
-- Generates cleaning report
+Führt eine umfassende Datenbereinigung durch:
+- Duplikate entfernen
+- Fehlende Werte behandeln
+- Ausreißer erkennen
+- Spaltennamen standardisieren
+- Bereinigungsbericht erstellen
 
-**Usage:**
+**Verwendung:**
 ```python
 python data_cleaning.py
 ```
 
 ### 2. data_validation.py
-Validates data quality:
-- Checks completeness
-- Validates uniqueness
-- Verifies data types
-- Validates value ranges
-- Generates validation report
+Validiert die Datenqualität:
+- Vollständigkeit prüfen
+- Eindeutigkeit validieren
+- Datentypen überprüfen
+- Wertebereiche validieren
+- Validierungsbericht erstellen
 
-**Usage:**
+**Verwendung:**
 ```python
 python data_validation.py
 ```
 
-### 3. preprocessing_pipeline.py
-Complete preprocessing pipeline for reproducibility
+## Datenqualitäts-Checkliste
 
-## Data Quality Checklist
+### Vollständigkeit
+- [ ] Alle erforderlichen Spalten vorhanden
+- [ ] Anteil fehlender Werte < 5 %
+- [ ] Keine vollständig fehlenden Spalten/Zeilen
 
-### Completeness
-- [ ] All required columns present
-- [ ] Missing value percentage < 5%
-- [ ] No entire columns/rows missing
+### Konsistenz
+- [ ] Datentypen sind korrekt
+- [ ] Keine doppelten Datensätze
+- [ ] Spaltennamen standardisiert
+- [ ] Datumsformate einheitlich
 
-### Consistency
-- [ ] Data types are correct
-- [ ] No duplicate records
-- [ ] Column names standardized
-- [ ] Date formats consistent
+### Gültigkeit
+- [ ] Werte innerhalb erwarteter Bereiche
+- [ ] Keine unmöglichen Werte (z. B. negatives Alter)
+- [ ] Kategorische Werte sind gültig
+- [ ] ID-Felder sind eindeutig
 
-### Validity
-- [ ] Values within expected ranges
-- [ ] No impossible values (e.g., negative age)
-- [ ] Categorical values are valid
-- [ ] ID fields are unique
+### Genauigkeit
+- [ ] Statistische Zusammenfassungen sind plausibel
+- [ ] Keine offensichtlichen Eingabefehler
+- [ ] Feldübergreifende Validierung bestanden
 
-### Accuracy
-- [ ] Statistical summaries are reasonable
-- [ ] No obvious data entry errors
-- [ ] Cross-field validation passes
+## Häufige Datenprobleme und Lösungen
 
-## Common Data Issues and Solutions
+### Fehlende Werte
+- **Erkennung:** `df.isnull().sum()` verwenden
+- **Strategien:**
+  - Entfernen, wenn < 5 % der Daten betroffen
+  - Mit Mittelwert/Median/Modus imputieren
+  - Fortgeschrittene Imputation (KNN, MICE)
+  - „Fehlend"-Indikator erstellen
 
-### Missing Values
-- **Detection:** Use `df.isnull().sum()`
-- **Strategies:**
-  - Drop if < 5% of data
-  - Impute with mean/median/mode
-  - Use advanced imputation (KNN, MICE)
-  - Create 'missing' indicator
+### Duplikate
+- **Erkennung:** `df.duplicated()` verwenden
+- **Maßnahme:** Mit `df.drop_duplicates()` entfernen
+- **Beachten:** Teilduplikate auf Schlüsselfeldern
 
-### Duplicates
-- **Detection:** Use `df.duplicated()`
-- **Action:** Remove using `df.drop_duplicates()`
-- **Consider:** Partial duplicates on key fields
+### Ausreißer
+- **Erkennungsmethoden:**
+  - IQR-Methode (1,5 × IQR)
+  - Z-Score (> 3 Standardabweichungen)
+  - Fachwissen
+- **Behandlung:**
+  - Entfernen bei Datenfehlern
+  - Begrenzen (Winsorisierung)
+  - Transformieren (log, sqrt)
+  - Beibehalten bei gültigen Extremwerten
 
-### Outliers
-- **Detection Methods:**
-  - IQR method (1.5 * IQR)
-  - Z-score (> 3 standard deviations)
-  - Domain knowledge
-- **Treatment:**
-  - Remove if data errors
-  - Cap/floor (winsorization)
-  - Transform (log, sqrt)
-  - Keep if valid extreme values
+### Datentypen
+- **Probleme:** Numerische Werte als String gespeichert, Datumsangaben als Object
+- **Lösung:** Konvertieren mit `pd.to_numeric()`, `pd.to_datetime()`
 
-### Data Types
-- **Issues:** Numeric stored as string, dates as object
-- **Solution:** Convert using `pd.to_numeric()`, `pd.to_datetime()`
+## Ausgabedateien
 
-## Output Files
-
-- `processed_data/patient_data_cleaned.csv` - Cleaned dataset
-- `cleaning_report.txt` - Cleaning operations log
-- `validation_report.txt` - Data quality validation results
+- `processed_data/patient_data_cleaned.csv` – Bereinigter Datensatz
+- `cleaning_report.txt` – Protokoll der Bereinigungsschritte
+- `validation_report.txt` – Ergebnisse der Datenqualitätsvalidierung
 
 ## Best Practices
 
-1. **Never modify raw data** - Always create new files
-2. **Document all changes** - Keep track of cleaning decisions
-3. **Version control** - Track changes to processing scripts
-4. **Reproducibility** - Make pipeline re-runnable
-5. **Validation** - Always validate after cleaning
+1. **Rohdaten niemals ändern** – Immer neue Dateien erstellen
+2. **Alle Änderungen dokumentieren** – Bereinigungsentscheidungen nachverfolgen
+3. **Versionskontrolle** – Änderungen an Verarbeitungsskripten nachverfolgen
+4. **Reproduzierbarkeit** – Pipeline wiederholbar gestalten
+5. **Validierung** – Nach der Bereinigung immer validieren
 
-## Next Steps
+## Nächste Schritte
 
-After data preparation:
-1. Review cleaning and validation reports
-2. Verify data quality meets requirements
-3. Proceed to Phase 4: Exploratory Data Analysis
-
-## Notes
-
-- Keep raw data unchanged in `2_data_acquisition/raw_data/`
-- Save processed data to `2_data_acquisition/processed_data/`
-- Document all preprocessing decisions
-- Consider creating data lineage documentation
+Nach der Datenvorbereitung:
+1. Bereinigungs- und Validierungsberichte überprüfen
+2. Sicherstellen, dass die Datenqualität den Anforderungen entspricht
+3. Weiter zu Phase 4: Explorative Datenanalyse

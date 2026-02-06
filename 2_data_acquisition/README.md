@@ -1,42 +1,41 @@
-# Phase 2: Data Acquisition
+# Phase 2: Datenanschaffung
 
-## Overview
-This phase focuses on collecting and organizing the patient segmentation dataset.
+## Überblick
+Diese Phase konzentriert sich auf das Sammeln und Organisieren des Patientensegmentierungs-Datensatzes.
 
-## Objectives
-- Download the dataset from Kaggle
-- Document the data source
-- Organize raw data files
-- Perform initial data assessment
+## Ziele
+- Datensatz von Kaggle herunterladen
+- Datenquelle dokumentieren
+- Rohdaten organisieren
+- Erste Datenbewertung durchführen
 
-## Dataset Information
+## Datensatz-Informationen
 
-**Source:** [Patient Segmentation Data](https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data)
+**Quelle:** [Patient Segmentation Data](https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data)
 
-**Provider:** Kaggle
+**Anbieter:** Kaggle
 
-**Author:** Nudrat Abbas
+**Autor:** Nudrat Abbas
 
-## Directory Structure
+## Verzeichnisstruktur
 
 ```
 2_data_acquisition/
-├── raw_data/              # Original, unmodified data files
-├── processed_data/        # Cleaned and processed data
-├── data_sources/          # Data source documentation
-└── download_data.py       # Data download script
+├── raw_data/              # Originale, unveränderte Datendateien
+├── processed_data/        # Bereinigte und verarbeitete Daten
+├── data_sources/          # Datenquellen-Dokumentation
+└── download_data.py       # Daten-Download-Skript
 ```
 
-## Instructions
+## Anleitung
 
-### Step 1: Setup Kaggle API
+### Schritt 1: Kaggle-API einrichten
 
-1. Create a Kaggle account at https://www.kaggle.com
-2. Go to your account settings: https://www.kaggle.com/account
-3. Scroll to "API" section
-4. Click "Create New API Token"
-5. This downloads `kaggle.json` file
-6. Place the file in `~/.kaggle/` directory:
+1. Kaggle-Konto erstellen unter https://www.kaggle.com
+2. Kontoeinstellungen aufrufen: https://www.kaggle.com/account
+3. Zum Abschnitt „API" scrollen
+4. „Create New API Token" klicken
+5. Die heruntergeladene `kaggle.json`-Datei in `~/.kaggle/` ablegen:
 
 ```bash
 mkdir -p ~/.kaggle
@@ -44,94 +43,78 @@ mv ~/Downloads/kaggle.json ~/.kaggle/
 chmod 600 ~/.kaggle/kaggle.json
 ```
 
-### Step 2: Install Dependencies
+### Schritt 2: Abhängigkeiten installieren
 
 ```bash
 pip install kaggle
 ```
 
-### Step 3: Download Dataset
+### Schritt 3: Datensatz herunterladen
 
-Run the download script:
+Download-Skript ausführen:
 
 ```bash
 python download_data.py
 ```
 
-This script will:
-- Verify Kaggle credentials
-- Create necessary directories
-- Download the dataset
-- Create documentation
+Das Skript wird:
+- Kaggle-Zugangsdaten überprüfen
+- Notwendige Verzeichnisse erstellen
+- Den Datensatz herunterladen
+- Dokumentation erstellen
 
-### Step 4: Verify Download
+### Schritt 4: Download überprüfen
 
-After download, check the `raw_data/` directory:
+Nach dem Download das Verzeichnis `raw_data/` prüfen:
 
 ```bash
 ls -lh raw_data/
 ```
 
-### Step 5: Initial Data Exploration
+### Schritt 5: Erste Datenexploration
 
-Quick preview of the data:
+Schnelle Vorschau der Daten:
 
 ```python
 import pandas as pd
 
-# Load the data
-df = pd.read_csv('raw_data/[filename].csv')
+# Daten laden
+df = pd.read_csv('raw_data/[dateiname].csv')
 
-# Display basic info
+# Basisinformationen anzeigen
 print(df.info())
 print(df.head())
 print(df.describe())
 ```
 
-## Data Quality Checklist
+## Datenqualitäts-Checkliste
 
-- [ ] Dataset downloaded successfully
-- [ ] All expected files present
-- [ ] File sizes are reasonable
-- [ ] Data can be loaded without errors
-- [ ] Data source documented
-- [ ] Initial row/column counts recorded
+- [ ] Datensatz erfolgreich heruntergeladen
+- [ ] Alle erwarteten Dateien vorhanden
+- [ ] Dateigrößen sind plausibel
+- [ ] Daten können fehlerfrei geladen werden
+- [ ] Datenquelle dokumentiert
+- [ ] Erste Zeilen-/Spaltenanzahl erfasst
 
-## Data Documentation
+## Nächste Schritte
 
-Create a data dictionary in `data_sources/` folder documenting:
-- Column names and descriptions
-- Data types
-- Expected value ranges
-- Missing value indicators
-- Any known data quality issues
+Nach Abschluss der Datenanschaffung:
+1. Datenstruktur und -inhalt überprüfen
+2. Erste Beobachtungen dokumentieren
+3. Weiter zu Phase 3: Datenvorbereitung
 
-## Next Steps
+## Fehlerbehebung
 
-After completing data acquisition:
-1. Review the data structure and contents
-2. Document any initial observations
-3. Proceed to Phase 3: Data Preparation
+**Problem:** Kaggle-Zugangsdaten nicht gefunden
+- **Lösung:** Überprüfen, ob `~/.kaggle/kaggle.json` existiert und die richtigen Berechtigungen hat
 
-## Notes
+**Problem:** Datensatz nicht gefunden
+- **Lösung:** Datensatznamen überprüfen und sicherstellen, dass er noch auf Kaggle verfügbar ist
 
-- Keep raw data files in `raw_data/` unmodified
-- All processing should create new files in `processed_data/`
-- Document any data issues discovered
-- Track data versions if multiple downloads occur
+**Problem:** Download schlägt fehl
+- **Lösung:** Internetverbindung und Kaggle-API-Status prüfen
 
-## Troubleshooting
+## Referenzen
 
-**Issue:** Kaggle credentials not found
-- **Solution:** Verify `~/.kaggle/kaggle.json` exists and has correct permissions
-
-**Issue:** Dataset not found
-- **Solution:** Verify the dataset name and that it's still available on Kaggle
-
-**Issue:** Download fails
-- **Solution:** Check internet connection and Kaggle API status
-
-## References
-
-- [Kaggle API Documentation](https://github.com/Kaggle/kaggle-api)
-- [Dataset Page](https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data)
+- [Kaggle-API-Dokumentation](https://github.com/Kaggle/kaggle-api)
+- [Datensatz-Seite](https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data)
