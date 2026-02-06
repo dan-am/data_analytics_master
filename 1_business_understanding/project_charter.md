@@ -62,8 +62,8 @@ Entwicklung eines datengetriebenen Patientensegmentierungsmodells zur Klassifizi
 ## 7. Ressourcen
 
 ### Daten
-- Patient Segmentation Dataset von Kaggle
-- Quelle: https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data
+- Patient HR Analytics: Job Change of Data Scientists
+- Quelle: https://www.kaggle.com/datasets/arashnic/hr-analytics-job-change-of-data-scientists?resource=download
 
 ### Technologie-Stack
 - Python 3.8+
