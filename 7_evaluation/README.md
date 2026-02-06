@@ -1,20 +1,20 @@
 # Phase 7: Evaluation
 
-## Overview
-This phase focuses on comprehensive evaluation of the patient segmentation models.
+## Überblick
+Diese Phase konzentriert sich auf die umfassende Bewertung der Patientensegmentierungsmodelle.
 
-## Objectives
-- Assess model performance
-- Validate segmentation quality
-- Compare different models
-- Analyze segment characteristics
-- Generate evaluation reports
+## Ziele
+- Modellleistung bewerten
+- Segmentierungsqualität validieren
+- Verschiedene Modelle vergleichen
+- Segmenteigenschaften analysieren
+- Evaluationsberichte erstellen
 
-## Evaluation Framework
+## Evaluationsrahmen
 
-### 1. Clustering Evaluation (Unsupervised)
+### 1. Clustering-Evaluation (unüberwacht)
 
-#### Internal Validation Metrics
+#### Interne Validierungsmetriken
 
 ```python
 from sklearn.metrics import (
@@ -24,71 +24,71 @@ from sklearn.metrics import (
     calinski_harabasz_score
 )
 
-# Silhouette Analysis
-silhouette_avg = silhouette_score(X_scaled, cluster_labels)
-sample_silhouette_values = silhouette_samples(X_scaled, cluster_labels)
+# Silhouette-Analyse
+silhouette_avg = silhouette_score(X_skaliert, cluster_labels)
+sample_silhouette_werte = silhouette_samples(X_skaliert, cluster_labels)
 
-# Davies-Bouldin Index (lower is better)
-db_index = davies_bouldin_score(X_scaled, cluster_labels)
+# Davies-Bouldin-Index (niedriger ist besser)
+db_index = davies_bouldin_score(X_skaliert, cluster_labels)
 
-# Calinski-Harabasz Index (higher is better)
-ch_index = calinski_harabasz_score(X_scaled, cluster_labels)
+# Calinski-Harabasz-Index (höher ist besser)
+ch_index = calinski_harabasz_score(X_skaliert, cluster_labels)
 
-print(f"Silhouette Score: {silhouette_avg:.3f}")
-print(f"Davies-Bouldin Index: {db_index:.3f}")
-print(f"Calinski-Harabasz Index: {ch_index:.3f}")
+print(f"Silhouette-Score: {silhouette_avg:.3f}")
+print(f"Davies-Bouldin-Index: {db_index:.3f}")
+print(f"Calinski-Harabasz-Index: {ch_index:.3f}")
 ```
 
-#### Silhouette Plot
+#### Silhouette-Plot
 ```python
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 fig, ax = plt.subplots(figsize=(10, 7))
-y_lower = 10
+y_unten = 10
 
-for i in range(n_clusters):
-    cluster_silhouette_values = sample_silhouette_values[cluster_labels == i]
-    cluster_silhouette_values.sort()
+for i in range(n_cluster):
+    cluster_silhouette_werte = sample_silhouette_werte[cluster_labels == i]
+    cluster_silhouette_werte.sort()
     
-    size_cluster_i = cluster_silhouette_values.shape[0]
-    y_upper = y_lower + size_cluster_i
+    groesse_cluster_i = cluster_silhouette_werte.shape[0]
+    y_oben = y_unten + groesse_cluster_i
     
-    color = cm.nipy_spectral(float(i) / n_clusters)
-    ax.fill_betweenx(np.arange(y_lower, y_upper),
-                     0, cluster_silhouette_values,
-                     facecolor=color, edgecolor=color, alpha=0.7)
+    farbe = cm.nipy_spectral(float(i) / n_cluster)
+    ax.fill_betweenx(np.arange(y_unten, y_oben),
+                     0, cluster_silhouette_werte,
+                     facecolor=farbe, edgecolor=farbe, alpha=0.7)
     
-    y_lower = y_upper + 10
+    y_unten = y_oben + 10
 
 ax.axvline(x=silhouette_avg, color="red", linestyle="--")
-plt.title('Silhouette Plot for Patient Segments')
-plt.xlabel('Silhouette Coefficient')
+plt.title('Silhouette-Plot für Patientensegmente')
+plt.xlabel('Silhouette-Koeffizient')
 plt.ylabel('Cluster')
 plt.show()
 ```
 
-#### Elbow Method
+#### Elbow-Methode
 ```python
 from sklearn.cluster import KMeans
 
 inertias = []
-K_range = range(2, 11)
+K_bereich = range(2, 11)
 
-for k in K_range:
+for k in K_bereich:
     kmeans = KMeans(n_clusters=k, random_state=42)
-    kmeans.fit(X_scaled)
+    kmeans.fit(X_skaliert)
     inertias.append(kmeans.inertia_)
 
 plt.figure(figsize=(8, 5))
-plt.plot(K_range, inertias, 'bx-')
-plt.xlabel('Number of Clusters (k)')
-plt.ylabel('Inertia')
-plt.title('Elbow Method for Optimal k')
+plt.plot(K_bereich, inertias, 'bx-')
+plt.xlabel('Anzahl Cluster (k)')
+plt.ylabel('Trägheit')
+plt.title('Elbow-Methode für optimales k')
 plt.show()
 ```
 
-### 2. Classification Evaluation (Supervised)
+### 2. Klassifikations-Evaluation (überwacht)
 
 ```python
 from sklearn.metrics import (
@@ -100,172 +100,167 @@ from sklearn.metrics import (
     roc_curve
 )
 
-# Basic metrics
-accuracy = accuracy_score(y_test, y_pred)
-precision, recall, f1, _ = precision_recall_fscore_support(
+# Basismetriken
+genauigkeit = accuracy_score(y_test, y_pred)
+praezision, recall, f1, _ = precision_recall_fscore_support(
     y_test, y_pred, average='weighted'
 )
 
-# Classification report
+# Klassifikationsbericht
 print(classification_report(y_test, y_pred))
 
-# Confusion matrix
+# Konfusionsmatrix
 cm = confusion_matrix(y_test, y_pred)
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix')
-plt.ylabel('True Label')
-plt.xlabel('Predicted Label')
+plt.title('Konfusionsmatrix')
+plt.ylabel('Wahrer Wert')
+plt.xlabel('Vorhergesagter Wert')
 plt.show()
-
-# ROC curve (for binary or multi-class)
-if hasattr(model, 'predict_proba'):
-    y_proba = model.predict_proba(X_test)
-    # For multi-class, calculate ROC for each class
 ```
 
-### 3. Segment Analysis
+### 3. Segmentanalyse
 
-#### Segment Profiles
+#### Segmentprofile
 ```python
-# Add cluster labels to dataframe
+# Cluster-Labels zum DataFrame hinzufügen
 df['segment'] = cluster_labels
 
-# Analyze segment characteristics
-segment_profiles = df.groupby('segment').agg({
-    'numerical_col1': ['mean', 'std'],
-    'numerical_col2': ['mean', 'std'],
-    'categorical_col': lambda x: x.mode()[0]
+# Segmenteigenschaften analysieren
+segment_profile = df.groupby('segment').agg({
+    'numerische_spalte1': ['mean', 'std'],
+    'numerische_spalte2': ['mean', 'std'],
+    'kategorische_spalte': lambda x: x.mode()[0]
 })
 
-print(segment_profiles)
+print(segment_profile)
 
-# Segment sizes
-segment_sizes = df['segment'].value_counts().sort_index()
-print("\nSegment Sizes:")
-print(segment_sizes)
+# Segmentgrößen
+segment_groessen = df['segment'].value_counts().sort_index()
+print("\nSegmentgrößen:")
+print(segment_groessen)
 
-# Visualize segment distribution
-segment_sizes.plot(kind='bar')
-plt.title('Patient Distribution Across Segments')
+# Segmentverteilung visualisieren
+segment_groessen.plot(kind='bar')
+plt.title('Patientenverteilung über Segmente')
 plt.xlabel('Segment')
-plt.ylabel('Number of Patients')
+plt.ylabel('Anzahl Patienten')
 plt.show()
 ```
 
-#### Feature Importance per Segment
+#### Feature-Importance pro Segment
 ```python
-# Calculate mean feature values per segment
-feature_means = df.groupby('segment')[numerical_features].mean()
+# Durchschnittliche Feature-Werte pro Segment berechnen
+feature_mittelwerte = df.groupby('segment')[numerische_features].mean()
 
-# Normalize for comparison
+# Für Vergleich normalisieren
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
-feature_means_normalized = pd.DataFrame(
-    scaler.fit_transform(feature_means),
-    columns=feature_means.columns,
-    index=feature_means.index
+feature_mittelwerte_normalisiert = pd.DataFrame(
+    scaler.fit_transform(feature_mittelwerte),
+    columns=feature_mittelwerte.columns,
+    index=feature_mittelwerte.index
 )
 
 # Heatmap
 plt.figure(figsize=(12, 6))
-sns.heatmap(feature_means_normalized.T, annot=True, cmap='RdYlGn', center=0)
-plt.title('Feature Profiles by Segment (Normalized)')
+sns.heatmap(feature_mittelwerte_normalisiert.T, annot=True, cmap='RdYlGn', center=0)
+plt.title('Feature-Profile nach Segment (normalisiert)')
 plt.xlabel('Segment')
 plt.ylabel('Feature')
 plt.show()
 ```
 
-### 4. Cluster Visualization
+### 4. Cluster-Visualisierung
 
-#### PCA Visualization
+#### PCA-Visualisierung
 ```python
 from sklearn.decomposition import PCA
 
-# Reduce to 2D
+# Auf 2D reduzieren
 pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
+X_pca = pca.fit_transform(X_skaliert)
 
-# Plot clusters
+# Cluster plotten
 plt.figure(figsize=(10, 7))
 scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], 
                      c=cluster_labels, cmap='viridis', alpha=0.6)
 plt.colorbar(scatter, label='Cluster')
-plt.xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.2%} variance)')
-plt.ylabel(f'PC2 ({pca.explained_variance_ratio_[1]:.2%} variance)')
-plt.title('Patient Segments Visualization (PCA)')
+plt.xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.2%} Varianz)')
+plt.ylabel(f'PC2 ({pca.explained_variance_ratio_[1]:.2%} Varianz)')
+plt.title('Patientensegmente – Visualisierung (PCA)')
 plt.show()
 ```
 
-#### t-SNE Visualization
+#### t-SNE-Visualisierung
 ```python
 from sklearn.manifold import TSNE
 
-# Reduce to 2D
+# Auf 2D reduzieren
 tsne = TSNE(n_components=2, random_state=42)
-X_tsne = tsne.fit_transform(X_scaled)
+X_tsne = tsne.fit_transform(X_skaliert)
 
-# Plot
+# Plotten
 plt.figure(figsize=(10, 7))
 scatter = plt.scatter(X_tsne[:, 0], X_tsne[:, 1], 
                      c=cluster_labels, cmap='viridis', alpha=0.6)
 plt.colorbar(scatter, label='Cluster')
-plt.title('Patient Segments Visualization (t-SNE)')
+plt.title('Patientensegmente – Visualisierung (t-SNE)')
 plt.show()
 ```
 
-### 5. Model Comparison
+### 5. Modellvergleich
 
 ```python
-# Compare multiple models
-results = []
+# Mehrere Modelle vergleichen
+ergebnisse = []
 
-for model_name, model in models.items():
-    score = silhouette_score(X_scaled, model.labels_)
-    db_score = davies_bouldin_score(X_scaled, model.labels_)
-    ch_score = calinski_harabasz_score(X_scaled, model.labels_)
+for modell_name, modell in modelle.items():
+    score = silhouette_score(X_skaliert, modell.labels_)
+    db_score = davies_bouldin_score(X_skaliert, modell.labels_)
+    ch_score = calinski_harabasz_score(X_skaliert, modell.labels_)
     
-    results.append({
-        'Model': model_name,
+    ergebnisse.append({
+        'Modell': modell_name,
         'Silhouette': score,
         'Davies-Bouldin': db_score,
         'Calinski-Harabasz': ch_score
     })
 
-comparison_df = pd.DataFrame(results)
-print(comparison_df)
+vergleichs_df = pd.DataFrame(ergebnisse)
+print(vergleichs_df)
 ```
 
-## Evaluation Checklist
+## Evaluations-Checkliste
 
-- [ ] Internal validation metrics calculated
-- [ ] Silhouette analysis performed
-- [ ] Segment profiles created
-- [ ] Cluster visualization generated
-- [ ] Model comparison completed
-- [ ] Best model selected and justified
-- [ ] Segments are interpretable
-- [ ] Segment sizes are reasonable
+- [ ] Interne Validierungsmetriken berechnet
+- [ ] Silhouette-Analyse durchgeführt
+- [ ] Segmentprofile erstellt
+- [ ] Cluster-Visualisierung erstellt
+- [ ] Modellvergleich abgeschlossen
+- [ ] Bestes Modell ausgewählt und begründet
+- [ ] Segmente sind interpretierbar
+- [ ] Segmentgrößen sind angemessen
 
-## Deliverables
+## Ergebnisse
 
-- [ ] Evaluation report with all metrics
-- [ ] Segment profiles and characteristics
-- [ ] Visualization plots
-- [ ] Model comparison table
-- [ ] Recommendations for segment use
+- [ ] Evaluationsbericht mit allen Metriken
+- [ ] Segmentprofile und -eigenschaften
+- [ ] Visualisierungsplots
+- [ ] Modellvergleichstabelle
+- [ ] Empfehlungen zur Segmentnutzung
 
-## Success Criteria
+## Erfolgskriterien
 
-### Metric Thresholds
-- **Silhouette Score:** > 0.5 (good separation)
-- **Davies-Bouldin Index:** < 1.0 (compact clusters)
-- **Segment Balance:** No segment < 5% of total patients
-- **Interpretability:** Clear differentiating features identified
+### Schwellenwerte
+- **Silhouette-Score:** > 0.5 (gute Trennung)
+- **Davies-Bouldin-Index:** < 1.0 (kompakte Cluster)
+- **Segmentbalance:** Kein Segment < 5 % der Gesamtpatienten
+- **Interpretierbarkeit:** Klare Unterscheidungsmerkmale identifiziert
 
-## Next Steps
+## Nächste Schritte
 
-After evaluation:
-1. Document final model selection
-2. Create segment interpretation guide
-3. Prepare deployment recommendations
-4. Proceed to Phase 8: Deployment
+Nach der Evaluation:
+1. Endgültige Modellauswahl dokumentieren
+2. Leitfaden zur Segmentinterpretation erstellen
+3. Deployment-Empfehlungen vorbereiten
+4. Weiter zu Phase 8: Deployment

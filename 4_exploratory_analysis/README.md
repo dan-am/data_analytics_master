@@ -1,58 +1,57 @@
-# Phase 4: Exploratory Data Analysis
+# Phase 4: Explorative Datenanalyse
 
-## Overview
-This phase focuses on understanding the data through statistical analysis and visualization.
+## Überblick
+Diese Phase konzentriert sich auf das Verständnis der Daten durch statistische Analysen und Visualisierungen.
 
-## Objectives
-- Understand data distributions
-- Identify patterns and relationships
-- Discover insights
-- Visualize key features
-- Generate statistical summaries
+## Ziele
+- Datenverteilungen verstehen
+- Muster und Zusammenhänge identifizieren
+- Erkenntnisse gewinnen
+- Wichtige Features visualisieren
+- Statistische Zusammenfassungen erstellen
 
-## Recommended Analyses
+## Empfohlene Analysen
 
-### Univariate Analysis
-- **Numerical Variables:**
-  - Distribution plots (histograms, KDE)
-  - Box plots for outlier detection
-  - Summary statistics (mean, median, std, quartiles)
+### Univariate Analyse
+- **Numerische Variablen:**
+  - Verteilungsdiagramme (Histogramme, KDE)
+  - Boxplots zur Ausreißererkennung
+  - Zusammenfassende Statistiken (Mittelwert, Median, Std, Quartile)
   
-- **Categorical Variables:**
-  - Frequency counts
-  - Bar charts
-  - Pie charts for proportions
+- **Kategorische Variablen:**
+  - Häufigkeitsverteilungen
+  - Balkendiagramme
+  - Kreisdiagramme für Anteile
 
-### Bivariate Analysis
-- Correlation analysis (correlation matrix, heatmap)
-- Scatter plots for numerical pairs
-- Box plots for categorical vs numerical
-- Cross-tabulations for categorical pairs
+### Bivariate Analyse
+- Korrelationsanalyse (Korrelationsmatrix, Heatmap)
+- Streudiagramme für numerische Paare
+- Boxplots für kategorisch vs. numerisch
+- Kreuztabellen für kategorische Paare
 
-### Multivariate Analysis
-- Pair plots
-- Principal Component Analysis (PCA)
-- Cluster tendency analysis
+### Multivariate Analyse
+- Pairplots
+- Hauptkomponentenanalyse (PCA)
+- Cluster-Tendenz-Analyse
 
-## Suggested Notebook Structure
+## Vorgeschlagene Notebook-Struktur
 
 ```python
-# 1. Import Libraries
+# 1. Bibliotheken importieren
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 2. Load Data
+# 2. Daten laden
 df = pd.read_csv('../2_data_acquisition/processed_data/patient_data_cleaned.csv')
 
-# 3. Basic Information
+# 3. Basisinformationen
 print(df.info())
 print(df.describe())
 print(df.head())
 
-# 4. Univariate Analysis
-# For each numerical column
+# 4. Univariate Analyse
 for col in numerical_cols:
     plt.figure(figsize=(12, 4))
     plt.subplot(1, 2, 1)
@@ -61,88 +60,68 @@ for col in numerical_cols:
     df.boxplot(column=col)
     plt.show()
 
-# 5. Correlation Analysis
+# 5. Korrelationsanalyse
 plt.figure(figsize=(10, 8))
 sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
 plt.show()
 
-# 6. Bivariate Analysis
+# 6. Bivariate Analyse
 sns.pairplot(df)
 plt.show()
 
-# 7. Key Insights Documentation
+# 7. Wichtige Erkenntnisse dokumentieren
 ```
 
-## Visualization Guidelines
+## Visualisierungsrichtlinien
 
-### Use appropriate chart types:
-- **Distributions:** Histograms, KDE plots
-- **Comparisons:** Bar charts, box plots
-- **Relationships:** Scatter plots, line charts
-- **Compositions:** Pie charts, stacked bar charts
-- **Trends over time:** Line charts
+### Geeignete Diagrammtypen verwenden:
+- **Verteilungen:** Histogramme, KDE-Plots
+- **Vergleiche:** Balkendiagramme, Boxplots
+- **Zusammenhänge:** Streudiagramme, Liniendiagramme
+- **Zusammensetzungen:** Kreisdiagramme, gestapelte Balkendiagramme
+- **Zeitliche Trends:** Liniendiagramme
 
 ### Best Practices:
-- Clear titles and labels
-- Appropriate color schemes
-- Readable font sizes
-- Consistent styling
-- Annotations for key insights
+- Klare Titel und Beschriftungen
+- Geeignete Farbschemata
+- Lesbare Schriftgrößen
+- Einheitliches Styling
+- Annotationen für wichtige Erkenntnisse
 
-## Key Questions to Answer
+## Zentrale Fragen
 
-1. **Data Understanding:**
-   - What is the shape of the data?
-   - What types of variables do we have?
-   - Are there any missing patterns?
+1. **Datenverständnis:**
+   - Welche Form haben die Daten?
+   - Welche Variablentypen gibt es?
+   - Gibt es fehlende Datenmuster?
 
-2. **Distributions:**
-   - Are numerical variables normally distributed?
-   - Are there any skewed distributions?
-   - What are the typical value ranges?
+2. **Verteilungen:**
+   - Sind numerische Variablen normalverteilt?
+   - Gibt es schiefe Verteilungen?
+   - Was sind die typischen Wertebereiche?
 
-3. **Relationships:**
-   - Which variables are correlated?
-   - Are there any clusters in the data?
-   - What patterns emerge?
+3. **Zusammenhänge:**
+   - Welche Variablen korrelieren?
+   - Gibt es Cluster in den Daten?
+   - Welche Muster zeichnen sich ab?
 
-4. **Patient Segments:**
-   - Can we see natural groupings?
-   - What features differentiate patients?
-   - How many segments might exist?
+4. **Patientensegmente:**
+   - Sind natürliche Gruppierungen erkennbar?
+   - Welche Features unterscheiden die Patienten?
+   - Wie viele Segmente könnten existieren?
 
-## Tools and Libraries
+## Ergebnisse
 
-```python
-# Core data analysis
-import pandas as pd
-import numpy as np
+- [ ] EDA-Jupyter-Notebook mit umfassender Analyse
+- [ ] Wichtige Visualisierungen als Bilder gespeichert
+- [ ] Statistischer Zusammenfassungsbericht
+- [ ] Dokument mit ersten Erkenntnissen
+- [ ] Empfehlungen für Feature Engineering
 
-# Visualization
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
+## Nächste Schritte
 
-# Statistical analysis
-from scipy import stats
-from statsmodels.graphics.gofplots import qqplot
-
-# Profiling (optional)
-# from pandas_profiling import ProfileReport
-```
-
-## Deliverables
-
-- [ ] EDA Jupyter notebook with comprehensive analysis
-- [ ] Key visualizations saved as images
-- [ ] Statistical summary report
-- [ ] Initial insights document
-- [ ] Recommendations for feature engineering
-
-## Next Steps
-
-After EDA:
-1. Document key findings
-2. Identify features for engineering
-3. Determine modeling approach
-4. Proceed to Phase 5: Feature Engineering
+Nach der EDA:
+1. Wichtige Ergebnisse dokumentieren
+2. Features für das Engineering identifizieren
+3. Modellierungsansatz festlegen
+4. Weiter zu Phase 5: Feature Engineering

@@ -1,117 +1,117 @@
-# Project Charter: Patient Segmentation Analysis
+# Projektcharta: Patientensegmentierungs-Analyse
 
-## 1. Executive Summary
+## 1. Zusammenfassung
 
-This project aims to develop a comprehensive patient segmentation system using advanced analytics and machine learning techniques. The goal is to identify distinct patient groups based on their characteristics, enabling healthcare providers to deliver personalized care and optimize resource allocation.
+Dieses Projekt zielt darauf ab, ein umfassendes Patientensegmentierungssystem mit fortgeschrittenen Analyse- und Machine-Learning-Techniken zu entwickeln. Das Ziel ist es, unterschiedliche Patientengruppen anhand ihrer Merkmale zu identifizieren, um Gesundheitsdienstleistern personalisierte Versorgung und optimierte Ressourcenzuteilung zu ermöglichen.
 
-## 2. Business Objectives
+## 2. Geschäftsziele
 
-### Primary Objective
-Develop a data-driven patient segmentation model to classify patients into meaningful groups for targeted healthcare interventions.
+### Hauptziel
+Entwicklung eines datengetriebenen Patientensegmentierungsmodells zur Klassifizierung von Patienten in aussagekräftige Gruppen für gezielte Gesundheitsinterventionen.
 
-### Secondary Objectives
-- Identify key patient characteristics that drive segmentation
-- Provide actionable insights for healthcare decision-makers
-- Create a scalable and reproducible analytics workflow
-- Enable personalized patient care strategies
+### Nebenziele
+- Identifikation der wichtigsten Patientenmerkmale für die Segmentierung
+- Bereitstellung umsetzbarer Erkenntnisse für Entscheidungsträger im Gesundheitswesen
+- Erstellung eines skalierbaren und reproduzierbaren Analyse-Workflows
+- Ermöglichung personalisierter Patientenversorgungsstrategien
 
-## 3. Scope
+## 3. Umfang
 
-### In Scope
-- Analysis of patient demographic and clinical data
-- Development of clustering/classification models
-- Exploratory data analysis and visualization
-- Feature engineering and selection
-- Model evaluation and validation
-- Documentation of insights and recommendations
+### Im Umfang enthalten
+- Analyse demografischer und klinischer Patientendaten
+- Entwicklung von Clustering-/Klassifikationsmodellen
+- Explorative Datenanalyse und Visualisierung
+- Feature Engineering und Feature-Selektion
+- Modellevaluation und -validierung
+- Dokumentation von Erkenntnissen und Empfehlungen
 
-### Out of Scope
-- Real-time patient monitoring systems
-- Integration with electronic health record (EHR) systems
-- Clinical diagnosis or treatment recommendations
-- Privacy compliance implementation (HIPAA, GDPR)
+### Nicht im Umfang enthalten
+- Echtzeit-Patientenüberwachungssysteme
+- Integration mit elektronischen Patientenakten-Systemen (EPA)
+- Klinische Diagnosen oder Behandlungsempfehlungen
+- Implementierung von Datenschutz-Compliance (HIPAA, DSGVO)
 
-## 4. Stakeholders
+## 4. Stakeholder
 
-- **Project Sponsor:** Data Analytics Masters Course (DAMI01/DATA01)
-- **Data Scientists:** Project team members
-- **End Users:** Healthcare analysts and decision-makers
-- **Subject Matter Experts:** Healthcare professionals (advisory)
+- **Projektauftraggeber:** Data Analytics Masterstudiengang (DAMI01/DATA01)
+- **Data Scientists:** Projektteam-Mitglieder
+- **Endanwender:** Healthcare-Analysten und Entscheidungsträger
+- **Fachexperten:** Gesundheitsfachkräfte (beratend)
 
-## 5. Success Criteria
+## 5. Erfolgskriterien
 
-### Quantitative Metrics
-- Achieve silhouette score > 0.5 for clustering models
-- Explain at least 70% of variance in patient characteristics
-- Complete all 8 phases of the Data Science Life Cycle
-- Document all analytical decisions and findings
+### Quantitative Metriken
+- Silhouette-Score > 0.5 für Clustering-Modelle erreichen
+- Mindestens 70 % der Varianz in Patientenmerkmalen erklären
+- Alle 8 Phasen des Data-Science-Lebenszyklus durchführen
+- Alle analytischen Entscheidungen und Ergebnisse dokumentieren
 
-### Qualitative Metrics
-- Clear and interpretable patient segments
-- Actionable recommendations for each segment
-- Reproducible analysis pipeline
-- Comprehensive documentation
+### Qualitative Metriken
+- Klare und interpretierbare Patientensegmente
+- Umsetzbare Empfehlungen für jedes Segment
+- Reproduzierbare Analyse-Pipeline
+- Umfassende Dokumentation
 
-## 6. Timeline
+## 6. Zeitplan
 
-- **Phase 1-2:** Week 1 - Business Understanding & Data Acquisition
-- **Phase 3-4:** Week 2 - Data Preparation & EDA
-- **Phase 5-6:** Week 3 - Feature Engineering & Modeling
-- **Phase 7-8:** Week 4 - Evaluation & Deployment
+- **Phase 1–2:** Woche 1 – Geschäftsverständnis & Datenanschaffung
+- **Phase 3–4:** Woche 2 – Datenvorbereitung & EDA
+- **Phase 5–6:** Woche 3 – Feature Engineering & Modellierung
+- **Phase 7–8:** Woche 4 – Evaluation & Deployment
 
-## 7. Resources
+## 7. Ressourcen
 
-### Data
-- Patient Segmentation Dataset from Kaggle
-- Source: https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data
+### Daten
+- Patient Segmentation Dataset von Kaggle
+- Quelle: https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data
 
-### Technology Stack
+### Technologie-Stack
 - Python 3.8+
 - Pandas, NumPy, Scikit-learn
 - Jupyter Notebooks
-- Visualization libraries (Matplotlib, Seaborn)
+- Visualisierungsbibliotheken (Matplotlib, Seaborn)
 
-### Human Resources
+### Personelle Ressourcen
 - Data Scientists
-- Domain experts (consultation)
+- Fachexperten (beratend)
 
-## 8. Risks and Mitigation
+## 8. Risiken und Gegenmaßnahmen
 
-| Risk | Impact | Probability | Mitigation Strategy |
-|------|--------|-------------|---------------------|
-| Data quality issues | High | Medium | Implement robust data validation and cleaning |
-| Unclear segments | Medium | Medium | Use multiple clustering algorithms and validation metrics |
-| Computational resources | Low | Low | Use efficient algorithms and sampling if needed |
-| Missing features | Medium | Low | Conduct thorough feature engineering phase |
+| Risiko | Auswirkung | Wahrscheinlichkeit | Gegenmaßnahme |
+|--------|------------|---------------------|---------------|
+| Datenqualitätsprobleme | Hoch | Mittel | Robuste Datenvalidierung und -bereinigung implementieren |
+| Unklare Segmente | Mittel | Mittel | Mehrere Clustering-Algorithmen und Validierungsmetriken verwenden |
+| Rechenressourcen | Niedrig | Niedrig | Effiziente Algorithmen und ggf. Sampling verwenden |
+| Fehlende Features | Mittel | Niedrig | Gründliche Feature-Engineering-Phase durchführen |
 
-## 9. Assumptions
+## 9. Annahmen
 
-- Patient data is representative of the target population
-- Segmentation will be based on available features only
-- Historical data patterns will be relevant for current analysis
-- Computational resources are sufficient for the analysis
+- Patientendaten sind repräsentativ für die Zielpopulation
+- Segmentierung basiert ausschließlich auf verfügbaren Features
+- Historische Datenmuster sind für aktuelle Analysen relevant
+- Rechenressourcen sind für die Analyse ausreichend
 
-## 10. Constraints
+## 10. Einschränkungen
 
-- Limited to publicly available Kaggle dataset
-- Academic project timeline constraints
-- No access to real-time patient data
-- No clinical validation available
+- Beschränkt auf öffentlich verfügbaren Kaggle-Datensatz
+- Zeitliche Einschränkungen durch akademischen Projektrahmen
+- Kein Zugang zu Echtzeit-Patientendaten
+- Keine klinische Validierung möglich
 
-## 11. Deliverables
+## 11. Ergebnisse
 
-1. Cleaned and processed patient dataset
-2. Exploratory data analysis report
-3. Trained segmentation models
-4. Model evaluation report
-5. Patient segment profiles and recommendations
-6. Complete project documentation
-7. Reproducible code and scripts
+1. Bereinigter und verarbeiteter Patientendatensatz
+2. Bericht zur explorativen Datenanalyse
+3. Trainierte Segmentierungsmodelle
+4. Modellevaluationsbericht
+5. Patientensegment-Profile und Empfehlungen
+6. Vollständige Projektdokumentation
+7. Reproduzierbarer Code und Skripte
 
-## 12. Approval
+## 12. Freigabe
 
-**Project Start Date:** [To be filled]
+**Projektstartdatum:** [Auszufüllen]
 
-**Approved by:** [To be filled]
+**Genehmigt von:** [Auszufüllen]
 
-**Date:** [To be filled]
+**Datum:** [Auszufüllen]

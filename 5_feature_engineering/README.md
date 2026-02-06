@@ -1,187 +1,180 @@
 # Phase 5: Feature Engineering
 
-## Overview
-This phase focuses on creating and selecting features that will improve model performance.
+## Überblick
+Diese Phase konzentriert sich auf die Erstellung und Auswahl von Features zur Verbesserung der Modellleistung.
 
-## Objectives
-- Create new meaningful features
-- Transform existing features
-- Select most relevant features
-- Encode categorical variables
-- Scale/normalize numerical features
+## Ziele
+- Neue aussagekräftige Features erstellen
+- Vorhandene Features transformieren
+- Relevanteste Features auswählen
+- Kategorische Variablen kodieren
+- Numerische Features skalieren/normalisieren
 
-## Feature Engineering Techniques
+## Feature-Engineering-Techniken
 
-### 1. Feature Creation
+### 1. Feature-Erstellung
 
-#### Interaction Features
+#### Interaktions-Features
 ```python
-# Create interaction between features
-df['feature_interaction'] = df['feature1'] * df['feature2']
+# Interaktion zwischen Features erstellen
+df['feature_interaktion'] = df['feature1'] * df['feature2']
 ```
 
-#### Aggregation Features
+#### Aggregations-Features
 ```python
-# Create aggregate features
-df['total_score'] = df[score_columns].sum(axis=1)
-df['average_metric'] = df[metric_columns].mean(axis=1)
+# Aggregierte Features erstellen
+df['gesamt_score'] = df[score_spalten].sum(axis=1)
+df['durchschnitt_metrik'] = df[metrik_spalten].mean(axis=1)
 ```
 
-#### Binning/Discretization
+#### Binning/Diskretisierung
 ```python
-# Create categorical bins from numerical features
-df['age_group'] = pd.cut(df['age'], bins=[0, 18, 35, 50, 65, 100], 
-                          labels=['child', 'young_adult', 'adult', 'senior', 'elderly'])
+# Kategorische Bins aus numerischen Features erstellen
+df['altersgruppe'] = pd.cut(df['alter'], bins=[0, 18, 35, 50, 65, 100], 
+                             labels=['kind', 'junger_erwachsener', 'erwachsener', 'senior', 'aelterer'])
 ```
 
-#### Domain-Specific Features
-- Create features based on healthcare domain knowledge
-- Risk scores, severity indices
-- Time-based features (if temporal data available)
+#### Domänenspezifische Features
+- Features basierend auf Healthcare-Fachwissen erstellen
+- Risikoscores, Schweregradindizes
+- Zeitbasierte Features (falls Zeitdaten verfügbar)
 
-### 2. Feature Transformation
+### 2. Feature-Transformation
 
-#### Scaling
+#### Skalierung
 ```python
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-# Standardization (z-score normalization)
+# Standardisierung (Z-Score-Normalisierung)
 scaler = StandardScaler()
-df_scaled = scaler.fit_transform(df[numerical_cols])
+df_skaliert = scaler.fit_transform(df[numerische_spalten])
 
-# Min-Max scaling
+# Min-Max-Skalierung
 scaler = MinMaxScaler()
-df_scaled = scaler.fit_transform(df[numerical_cols])
+df_skaliert = scaler.fit_transform(df[numerische_spalten])
 ```
 
-#### Encoding Categorical Variables
+#### Kodierung kategorischer Variablen
 ```python
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
-# Label encoding for ordinal variables
+# Label-Kodierung für ordinale Variablen
 le = LabelEncoder()
-df['category_encoded'] = le.fit_transform(df['category'])
+df['kategorie_kodiert'] = le.fit_transform(df['kategorie'])
 
-# One-hot encoding for nominal variables
-df_encoded = pd.get_dummies(df, columns=['category'], drop_first=True)
+# One-Hot-Kodierung für nominale Variablen
+df_kodiert = pd.get_dummies(df, columns=['kategorie'], drop_first=True)
 ```
 
-#### Mathematical Transformations
+#### Mathematische Transformationen
 ```python
-# Log transformation (for skewed data)
+# Log-Transformation (für schiefe Daten)
 df['feature_log'] = np.log1p(df['feature'])
 
-# Square root transformation
+# Quadratwurzel-Transformation
 df['feature_sqrt'] = np.sqrt(df['feature'])
 
-# Box-Cox transformation
+# Box-Cox-Transformation
 from scipy.stats import boxcox
 df['feature_boxcox'], _ = boxcox(df['feature'] + 1)
 ```
 
-### 3. Feature Selection
+### 3. Feature-Selektion
 
-#### Correlation-based Selection
+#### Korrelationsbasierte Selektion
 ```python
-# Remove highly correlated features
-corr_matrix = df.corr().abs()
-upper_triangle = corr_matrix.where(
-    np.triu(np.ones(corr_matrix.shape), k=1).astype(bool)
+# Hoch korrelierte Features entfernen
+korr_matrix = df.corr().abs()
+oberes_dreieck = korr_matrix.where(
+    np.triu(np.ones(korr_matrix.shape), k=1).astype(bool)
 )
-to_drop = [col for col in upper_triangle.columns 
-           if any(upper_triangle[col] > 0.95)]
+zu_entfernen = [col for col in oberes_dreieck.columns 
+                if any(oberes_dreieck[col] > 0.95)]
 ```
 
-#### Variance-based Selection
+#### Varianzbasierte Selektion
 ```python
 from sklearn.feature_selection import VarianceThreshold
 
-# Remove low variance features
+# Features mit geringer Varianz entfernen
 selector = VarianceThreshold(threshold=0.01)
-selected_features = selector.fit_transform(df)
+ausgewaehlte_features = selector.fit_transform(df)
 ```
 
-#### Statistical Tests
+#### Statistische Tests
 ```python
 from sklearn.feature_selection import SelectKBest, f_classif, chi2
 
-# For classification
+# Für Klassifikation
 selector = SelectKBest(score_func=f_classif, k=10)
-selected_features = selector.fit_transform(X, y)
+ausgewaehlte_features = selector.fit_transform(X, y)
 ```
 
-#### Model-based Selection
+#### Modellbasierte Selektion
 ```python
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectFromModel
 
-# Use Random Forest for feature importance
+# Random Forest für Feature-Importance verwenden
 rf = RandomForestClassifier(n_estimators=100)
 rf.fit(X, y)
 feature_importance = pd.DataFrame({
     'feature': X.columns,
-    'importance': rf.feature_importances_
-}).sort_values('importance', ascending=False)
+    'wichtigkeit': rf.feature_importances_
+}).sort_values('wichtigkeit', ascending=False)
 ```
 
-## Feature Engineering Pipeline
+## Feature-Engineering-Pipeline
 
 ```python
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
 
-# Define transformers for different column types
-numeric_transformer = Pipeline(steps=[
+# Transformer für verschiedene Spaltentypen definieren
+numerischer_transformer = Pipeline(steps=[
     ('scaler', StandardScaler())
 ])
 
-categorical_transformer = Pipeline(steps=[
+kategorischer_transformer = Pipeline(steps=[
     ('onehot', OneHotEncoder(drop='first', handle_unknown='ignore'))
 ])
 
-# Combine transformers
-preprocessor = ColumnTransformer(
+# Transformer kombinieren
+vorverarbeitung = ColumnTransformer(
     transformers=[
-        ('num', numeric_transformer, numerical_cols),
-        ('cat', categorical_transformer, categorical_cols)
+        ('num', numerischer_transformer, numerische_spalten),
+        ('kat', kategorischer_transformer, kategorische_spalten)
     ])
 
-# Create full pipeline
+# Vollständige Pipeline erstellen
 pipeline = Pipeline(steps=[
-    ('preprocessor', preprocessor),
-    ('feature_selection', SelectKBest(k=20))
+    ('vorverarbeitung', vorverarbeitung),
+    ('feature_selektion', SelectKBest(k=20))
 ])
 ```
 
 ## Best Practices
 
-1. **Document all transformations** - Keep track of feature engineering decisions
-2. **Avoid data leakage** - Fit transformers only on training data
-3. **Create reproducible pipelines** - Use sklearn pipelines
-4. **Validate new features** - Check if they improve model performance
-5. **Keep it simple** - Start with simple features, add complexity as needed
-6. **Domain knowledge** - Leverage healthcare expertise for feature creation
+1. **Alle Transformationen dokumentieren** – Feature-Engineering-Entscheidungen nachverfolgen
+2. **Datenleck vermeiden** – Transformer nur auf Trainingsdaten fitten
+3. **Reproduzierbare Pipelines erstellen** – sklearn-Pipelines verwenden
+4. **Neue Features validieren** – Prüfen, ob sie die Modellleistung verbessern
+5. **Einfach beginnen** – Mit einfachen Features starten, Komplexität bei Bedarf erhöhen
+6. **Fachwissen nutzen** – Healthcare-Expertise für Feature-Erstellung einsetzen
 
-## Evaluation Metrics
+## Ergebnisse
 
-- Feature importance scores
-- Correlation with target (if supervised)
-- Variance explained
-- Model performance improvement
+- [ ] Feature-Erstellungsskripte
+- [ ] Feature-Selektionsanalyse
+- [ ] Feature-Engineering-Pipeline
+- [ ] Feature-Dokumentation (Datenwörterbuch)
+- [ ] Vergleich der Feature-Sets
 
-## Deliverables
+## Nächste Schritte
 
-- [ ] Feature creation scripts
-- [ ] Feature selection analysis
-- [ ] Feature engineering pipeline
-- [ ] Feature documentation (data dictionary)
-- [ ] Comparison of feature sets
-
-## Next Steps
-
-After feature engineering:
-1. Finalize feature set
-2. Create preprocessing pipeline
-3. Save transformed datasets
-4. Proceed to Phase 6: Modeling
+Nach dem Feature Engineering:
+1. Feature-Set finalisieren
+2. Vorverarbeitungs-Pipeline erstellen
+3. Transformierte Datensätze speichern
+4. Weiter zu Phase 6: Modellierung
