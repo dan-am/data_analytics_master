@@ -1,136 +1,123 @@
-# Scripts Directory
+# Skripte-Verzeichnis
 
-## Overview
-This directory contains utility scripts and helper functions used across the project.
+## Überblick
+Dieses Verzeichnis enthält Hilfsskripte und wiederverwendbare Funktionen für das gesamte Projekt.
 
-## Recommended Scripts
+## Empfohlene Skripte
 
-### Data Processing
-- `data_loader.py` - Functions to load and validate data
-- `data_transformer.py` - Common data transformations
-- `feature_utils.py` - Feature engineering utilities
+### Datenverarbeitung
+- `data_loader.py` – Funktionen zum Laden und Validieren von Daten
+- `data_transformer.py` – Häufige Datentransformationen
+- `feature_utils.py` – Hilfsfunktionen für Feature Engineering
 
-### Visualization
-- `plotting_utils.py` - Reusable plotting functions
-- `reporting.py` - Report generation utilities
+### Visualisierung
+- `plotting_utils.py` – Wiederverwendbare Plot-Funktionen
+- `reporting.py` – Berichtserstellungsfunktionen
 
-### Model Utilities
-- `model_utils.py` - Model training and evaluation helpers
-- `metrics.py` - Custom metrics and evaluation functions
+### Modell-Hilfsfunktionen
+- `model_utils.py` – Helfer für Modelltraining und -evaluation
+- `metrics.py` – Benutzerdefinierte Metriken und Evaluationsfunktionen
 
-### General Utilities
-- `config.py` - Configuration and constants
-- `logger.py` - Logging utilities
-- `file_utils.py` - File I/O helpers
+### Allgemeine Hilfsfunktionen
+- `config.py` – Konfiguration und Konstanten
+- `logger.py` – Logging-Hilfsfunktionen
+- `file_utils.py` – Datei-I/O-Helfer
 
-## Example: config.py
+## Beispiel: config.py
 
 ```python
 """
-Project configuration and constants
+Projektkonfiguration und Konstanten
 """
 
 from pathlib import Path
 
-# Project paths
-PROJECT_ROOT = Path(__file__).parent.parent
-DATA_DIR = PROJECT_ROOT / '2_data_acquisition'
-RAW_DATA_DIR = DATA_DIR / 'raw_data'
-PROCESSED_DATA_DIR = DATA_DIR / 'processed_data'
-MODELS_DIR = PROJECT_ROOT / 'models'
-REPORTS_DIR = PROJECT_ROOT / 'reports'
+# Projektpfade
+PROJEKT_ROOT = Path(__file__).parent.parent
+DATEN_VERZEICHNIS = PROJEKT_ROOT / '2_data_acquisition'
+ROHDATEN_VERZEICHNIS = DATEN_VERZEICHNIS / 'raw_data'
+VERARBEITETE_DATEN_VERZEICHNIS = DATEN_VERZEICHNIS / 'processed_data'
+MODELLE_VERZEICHNIS = PROJEKT_ROOT / 'models'
+BERICHTE_VERZEICHNIS = PROJEKT_ROOT / 'reports'
 
-# Model parameters
-RANDOM_SEED = 42
-TEST_SIZE = 0.2
-CV_FOLDS = 5
+# Modellparameter
+ZUFALLS_SEED = 42
+TEST_GROESSE = 0.2
+KV_FALTEN = 5
 
-# Feature lists (to be updated based on actual data)
-NUMERICAL_FEATURES = []
-CATEGORICAL_FEATURES = []
-TARGET_COLUMN = 'segment'
-
-# Model configurations
-KMEANS_CONFIG = {
-    'n_clusters': 4,
-    'random_state': RANDOM_SEED,
-    'n_init': 10
-}
-
-RANDOM_FOREST_CONFIG = {
-    'n_estimators': 100,
-    'max_depth': 10,
-    'random_state': RANDOM_SEED
-}
+# Feature-Listen (nach tatsächlichen Daten aktualisieren)
+NUMERISCHE_FEATURES = []
+KATEGORISCHE_FEATURES = []
+ZIEL_SPALTE = 'segment'
 ```
 
-## Example: plotting_utils.py
+## Beispiel: plotting_utils.py
 
 ```python
 """
-Reusable plotting functions
+Wiederverwendbare Plot-Funktionen
 """
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_distribution(data, column, title=None, save_path=None):
-    """Plot distribution of a variable."""
+def plot_verteilung(daten, spalte, titel=None, speicher_pfad=None):
+    """Verteilung einer Variable plotten."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
     
-    # Histogram
-    ax1.hist(data[column], bins=30, edgecolor='black')
-    ax1.set_xlabel(column)
-    ax1.set_ylabel('Frequency')
-    ax1.set_title(f'Distribution of {column}')
+    # Histogramm
+    ax1.hist(daten[spalte], bins=30, edgecolor='black')
+    ax1.set_xlabel(spalte)
+    ax1.set_ylabel('Häufigkeit')
+    ax1.set_title(f'Verteilung von {spalte}')
     
-    # Box plot
-    ax2.boxplot(data[column])
-    ax2.set_ylabel(column)
-    ax2.set_title(f'Box Plot of {column}')
+    # Boxplot
+    ax2.boxplot(daten[spalte])
+    ax2.set_ylabel(spalte)
+    ax2.set_title(f'Boxplot von {spalte}')
     
-    if title:
-        fig.suptitle(title)
+    if titel:
+        fig.suptitle(titel)
     
     plt.tight_layout()
     
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    if speicher_pfad:
+        plt.savefig(speicher_pfad, dpi=300, bbox_inches='tight')
     
     plt.show()
 
-def plot_correlation_matrix(data, title='Correlation Matrix', save_path=None):
-    """Plot correlation heatmap."""
+def plot_korrelationsmatrix(daten, titel='Korrelationsmatrix', speicher_pfad=None):
+    """Korrelations-Heatmap plotten."""
     plt.figure(figsize=(10, 8))
-    correlation = data.corr()
-    sns.heatmap(correlation, annot=True, cmap='coolwarm', center=0,
+    korrelation = daten.corr()
+    sns.heatmap(korrelation, annot=True, cmap='coolwarm', center=0,
                 fmt='.2f', square=True, linewidths=0.5)
-    plt.title(title)
+    plt.title(titel)
     
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    if speicher_pfad:
+        plt.savefig(speicher_pfad, dpi=300, bbox_inches='tight')
     
     plt.show()
 ```
 
 ## Best Practices
 
-1. **Modularity:** Each script should have a single, clear purpose
-2. **Documentation:** Include docstrings for all functions
-3. **Testing:** Write unit tests for utility functions
-4. **Imports:** Keep imports organized and minimal
-5. **Reusability:** Write general-purpose functions
-6. **Configuration:** Use config.py for constants
+1. **Modularität:** Jedes Skript hat einen klaren, einzelnen Zweck
+2. **Dokumentation:** Docstrings für alle Funktionen
+3. **Tests:** Unit-Tests für Hilfsfunktionen schreiben
+4. **Imports:** Imports organisiert und minimal halten
+5. **Wiederverwendbarkeit:** Allgemein einsetzbare Funktionen schreiben
+6. **Konfiguration:** config.py für Konstanten nutzen
 
-## Usage
+## Verwendung
 
-Import scripts in notebooks or other scripts:
+Skripte in Notebooks oder anderen Skripten importieren:
 
 ```python
 import sys
 sys.path.append('../scripts')
 
 from config import *
-from plotting_utils import plot_distribution
-from data_loader import load_cleaned_data
+from plotting_utils import plot_verteilung
+from data_loader import lade_bereinigte_daten
 ```

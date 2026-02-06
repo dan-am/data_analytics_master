@@ -1,46 +1,43 @@
-# Notebooks Directory
+# Notebooks-Verzeichnis
 
-## Overview
-This directory contains Jupyter notebooks for interactive analysis and experimentation.
+## Überblick
+Dieses Verzeichnis enthält Jupyter-Notebooks für interaktive Analysen und Experimente.
 
-## Recommended Notebooks
+### Notebook-Struktur
 
-### 1. Data Exploration
-- `01_initial_data_exploration.ipynb` - First look at the data
-- `02_eda_comprehensive.ipynb` - Comprehensive exploratory data analysis
-- `03_statistical_analysis.ipynb` - Statistical tests and analysis
+#### Datenexploration
+- `01_erste_datenexploration.ipynb` – Erster Blick auf die Daten
+- `02_eda_umfassend.ipynb` – Umfassende explorative Datenanalyse
+- `03_statistische_analyse.ipynb` – Statistische Tests und Analysen
 
-### 2. Feature Engineering
-- `04_feature_creation.ipynb` - Experimenting with new features
-- `05_feature_selection.ipynb` - Feature selection experiments
+#### Feature Engineering
+- `04_feature_erstellung.ipynb` – Experimente mit neuen Features
+- `05_feature_selektion.ipynb` – Feature-Selektions-Experimente
 
-### 3. Modeling
-- `06_baseline_models.ipynb` - Baseline model experiments
-- `07_model_tuning.ipynb` - Hyperparameter tuning
-- `08_model_comparison.ipynb` - Compare different approaches
+#### Modellierung
+- `06_baseline_modelle.ipynb` – Baseline-Modell-Experimente
+- `07_modell_tuning.ipynb` – Hyperparameter-Tuning
+- `08_modellvergleich.ipynb` – Vergleich verschiedener Ansätze
 
-### 4. Evaluation
-- `09_model_evaluation.ipynb` - Final model evaluation
-- `10_segment_analysis.ipynb` - Deep dive into segments
+#### Evaluation
+- `09_modellevaluation.ipynb` – Endgültige Modellevaluation
+- `10_segmentanalyse.ipynb` – Detaillierte Segmentanalyse
 
 ## Best Practices
 
-1. **Naming Convention:** Use numbers for ordering, descriptive names
-2. **Clear Structure:** 
-   - Markdown headers for sections
-   - Comments explaining complex code
-   - Clear outputs showing results
-3. **Version Control:** Commit notebooks with outputs cleared
-4. **Reproducibility:** Set random seeds, document versions
-5. **Documentation:** Include analysis decisions and findings
+1. **Namenskonvention:** Nummerierung für Reihenfolge, beschreibende Namen
+2. **Klare Struktur:** Markdown-Überschriften, Kommentare, nachvollziehbare Ergebnisse
+3. **Versionskontrolle:** Notebooks mit gelöschten Ausgaben committen
+4. **Reproduzierbarkeit:** Zufallsseeds setzen, Versionen dokumentieren
+5. **Dokumentation:** Analyseentscheidungen und Ergebnisse festhalten
 
-## Notebook Template
+## Notebook-Vorlage
 
 ```python
-# Title: [Notebook Purpose]
-# Author: [Your Name]
-# Date: [Date]
-# Description: [Brief description]
+# Titel: [Notebook-Zweck]
+# Autor: [Name]
+# Datum: [Datum]
+# Beschreibung: [Kurzbeschreibung]
 
 # 1. Setup
 import pandas as pd
@@ -48,27 +45,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Set random seed
+# Zufallsseed setzen
 np.random.seed(42)
 
-# Set plotting style
+# Plot-Stil festlegen
 sns.set_style('whitegrid')
 plt.rcParams['figure.figsize'] = (12, 6)
 
-# 2. Load Data
-# [Your code]
+# 2. Daten laden
+# [Code hier]
 
-# 3. Analysis
-# [Your code]
+# 3. Analyse
+# [Code hier]
 
-# 4. Conclusions
-# [Document findings]
+# 4. Ergebnisse
+# [Erkenntnisse dokumentieren]
 ```
 
-## Tips
+## Tipps
 
-- Use markdown cells liberally to explain your thinking
-- Include visualizations to support findings
-- Save important plots to the reports/ directory
-- Clear outputs before committing to git
-- Keep notebooks focused on specific tasks
+- Markdown-Zellen verwenden, um Gedankengänge zu erklären
+- Visualisierungen zur Unterstützung der Ergebnisse einbinden
+- Wichtige Plots im reports/-Verzeichnis speichern
+- Ausgaben vor dem Committen löschen
+- Notebooks auf bestimmte Aufgaben fokussieren

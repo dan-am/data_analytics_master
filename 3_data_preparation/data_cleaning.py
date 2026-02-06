@@ -1,8 +1,8 @@
 """
-Data Cleaning Script
-Phase 3: Data Preparation
+Datenbereinigungsskript
+Phase 3: Datenvorbereitung
 
-This script performs data cleaning operations on the patient segmentation dataset.
+Dieses Skript führt Datenbereinigungsoperationen auf dem Patientensegmentierungs-Datensatz durch.
 """
 
 import pandas as pd
@@ -10,191 +10,190 @@ import numpy as np
 from pathlib import Path
 import logging
 
-# Set up logging
+# Logging einrichten
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
-class DataCleaner:
-    """Class to handle data cleaning operations."""
+class DatenBereiniger:
+    """Klasse zur Durchführung von Datenbereinigungsoperationen."""
     
-    def __init__(self, input_path, output_path):
+    def __init__(self, eingabe_pfad, ausgabe_pfad):
         """
-        Initialize DataCleaner.
+        DatenBereiniger initialisieren.
         
         Args:
-            input_path (str): Path to raw data file
-            output_path (str): Path to save cleaned data
+            eingabe_pfad (str): Pfad zur Rohdatendatei
+            ausgabe_pfad (str): Pfad zum Speichern der bereinigten Daten
         """
-        self.input_path = Path(input_path)
-        self.output_path = Path(output_path)
+        self.eingabe_pfad = Path(eingabe_pfad)
+        self.ausgabe_pfad = Path(ausgabe_pfad)
         self.df = None
-        self.cleaning_report = []
+        self.bereinigungsbericht = []
         
-    def load_data(self):
-        """Load the raw data."""
-        logger.info(f"Loading data from {self.input_path}")
-        self.df = pd.read_csv(self.input_path)
-        logger.info(f"Data loaded: {self.df.shape[0]} rows, {self.df.shape[1]} columns")
-        self.cleaning_report.append(f"Initial shape: {self.df.shape}")
+    def daten_laden(self):
+        """Rohdaten laden."""
+        logger.info(f"Lade Daten von {self.eingabe_pfad}")
+        self.df = pd.read_csv(self.eingabe_pfad)
+        logger.info(f"Daten geladen: {self.df.shape[0]} Zeilen, {self.df.shape[1]} Spalten")
+        self.bereinigungsbericht.append(f"Ursprüngliche Form: {self.df.shape}")
         
-    def check_duplicates(self):
-        """Identify and remove duplicate rows."""
-        initial_count = len(self.df)
-        duplicates = self.df.duplicated().sum()
+    def duplikate_pruefen(self):
+        """Doppelte Zeilen identifizieren und entfernen."""
+        duplikate = self.df.duplicated().sum()
         
-        if duplicates > 0:
-            logger.warning(f"Found {duplicates} duplicate rows")
+        if duplikate > 0:
+            logger.warning(f"{duplikate} doppelte Zeilen gefunden")
             self.df = self.df.drop_duplicates()
-            logger.info(f"Removed {duplicates} duplicate rows")
-            self.cleaning_report.append(f"Duplicates removed: {duplicates}")
+            logger.info(f"{duplikate} doppelte Zeilen entfernt")
+            self.bereinigungsbericht.append(f"Duplikate entfernt: {duplikate}")
         else:
-            logger.info("No duplicate rows found")
-            self.cleaning_report.append("No duplicates found")
+            logger.info("Keine doppelten Zeilen gefunden")
+            self.bereinigungsbericht.append("Keine Duplikate gefunden")
     
-    def handle_missing_values(self, strategy='analyze'):
+    def fehlende_werte_behandeln(self, strategie='analysieren'):
         """
-        Handle missing values in the dataset.
+        Fehlende Werte im Datensatz behandeln.
         
         Args:
-            strategy (str): Strategy for handling missing values
-                          'analyze' - only report missing values
-                          'drop' - drop rows with missing values
-                          'impute' - impute missing values
+            strategie (str): Strategie zur Behandlung fehlender Werte
+                           'analysieren' - nur fehlende Werte melden
+                           'entfernen' - Zeilen mit fehlenden Werten entfernen
+                           'imputieren' - fehlende Werte imputieren
         """
-        missing = self.df.isnull().sum()
-        missing_pct = (missing / len(self.df)) * 100
+        fehlend = self.df.isnull().sum()
+        fehlend_proz = (fehlend / len(self.df)) * 100
         
-        if missing.sum() > 0:
-            logger.info("Missing values found:")
-            for col, count in missing[missing > 0].items():
-                logger.info(f"  {col}: {count} ({missing_pct[col]:.2f}%)")
-                self.cleaning_report.append(f"Missing in {col}: {count} ({missing_pct[col]:.2f}%)")
+        if fehlend.sum() > 0:
+            logger.info("Fehlende Werte gefunden:")
+            for spalte, anzahl in fehlend[fehlend > 0].items():
+                logger.info(f"  {spalte}: {anzahl} ({fehlend_proz[spalte]:.2f}%)")
+                self.bereinigungsbericht.append(f"Fehlend in {spalte}: {anzahl} ({fehlend_proz[spalte]:.2f}%)")
             
-            if strategy == 'drop':
-                initial_count = len(self.df)
+            if strategie == 'entfernen':
+                anfangs_anzahl = len(self.df)
                 self.df = self.df.dropna()
-                dropped = initial_count - len(self.df)
-                logger.info(f"Dropped {dropped} rows with missing values")
-                self.cleaning_report.append(f"Rows dropped (missing values): {dropped}")
+                entfernt = anfangs_anzahl - len(self.df)
+                logger.info(f"{entfernt} Zeilen mit fehlenden Werten entfernt")
+                self.bereinigungsbericht.append(f"Entfernte Zeilen (fehlende Werte): {entfernt}")
             
-            elif strategy == 'impute':
-                # Impute numerical columns with median
-                num_cols = self.df.select_dtypes(include=[np.number]).columns
-                for col in num_cols:
-                    if self.df[col].isnull().any():
-                        median_val = self.df[col].median()
-                        self.df[col].fillna(median_val, inplace=True)
-                        logger.info(f"Imputed {col} with median: {median_val}")
+            elif strategie == 'imputieren':
+                # Numerische Spalten mit Median imputieren
+                num_spalten = self.df.select_dtypes(include=[np.number]).columns
+                for spalte in num_spalten:
+                    if self.df[spalte].isnull().any():
+                        median_wert = self.df[spalte].median()
+                        self.df[spalte].fillna(median_wert, inplace=True)
+                        logger.info(f"{spalte} mit Median imputiert: {median_wert}")
                 
-                # Impute categorical columns with mode
-                cat_cols = self.df.select_dtypes(include=['object']).columns
-                for col in cat_cols:
-                    if self.df[col].isnull().any():
-                        mode_val = self.df[col].mode()[0]
-                        self.df[col].fillna(mode_val, inplace=True)
-                        logger.info(f"Imputed {col} with mode: {mode_val}")
+                # Kategorische Spalten mit Modus imputieren
+                kat_spalten = self.df.select_dtypes(include=['object']).columns
+                for spalte in kat_spalten:
+                    if self.df[spalte].isnull().any():
+                        modus_wert = self.df[spalte].mode()[0]
+                        self.df[spalte].fillna(modus_wert, inplace=True)
+                        logger.info(f"{spalte} mit Modus imputiert: {modus_wert}")
                 
-                self.cleaning_report.append("Missing values imputed")
+                self.bereinigungsbericht.append("Fehlende Werte imputiert")
         else:
-            logger.info("No missing values found")
-            self.cleaning_report.append("No missing values")
+            logger.info("Keine fehlenden Werte gefunden")
+            self.bereinigungsbericht.append("Keine fehlenden Werte")
     
-    def detect_outliers(self, method='iqr'):
+    def ausreisser_erkennen(self, methode='iqr'):
         """
-        Detect outliers in numerical columns.
+        Ausreißer in numerischen Spalten erkennen.
         
         Args:
-            method (str): Method for outlier detection ('iqr' or 'zscore')
+            methode (str): Methode zur Ausreißererkennung ('iqr' oder 'zscore')
         """
-        num_cols = self.df.select_dtypes(include=[np.number]).columns
+        num_spalten = self.df.select_dtypes(include=[np.number]).columns
         
-        logger.info(f"Detecting outliers using {method} method")
+        logger.info(f"Erkenne Ausreißer mit {methode}-Methode")
         
-        for col in num_cols:
-            if method == 'iqr':
-                Q1 = self.df[col].quantile(0.25)
-                Q3 = self.df[col].quantile(0.75)
+        for spalte in num_spalten:
+            if methode == 'iqr':
+                Q1 = self.df[spalte].quantile(0.25)
+                Q3 = self.df[spalte].quantile(0.75)
                 IQR = Q3 - Q1
-                lower_bound = Q1 - 1.5 * IQR
-                upper_bound = Q3 + 1.5 * IQR
-                outliers = ((self.df[col] < lower_bound) | (self.df[col] > upper_bound)).sum()
+                untere_grenze = Q1 - 1.5 * IQR
+                obere_grenze = Q3 + 1.5 * IQR
+                ausreisser = ((self.df[spalte] < untere_grenze) | (self.df[spalte] > obere_grenze)).sum()
                 
-            elif method == 'zscore':
-                z_scores = np.abs((self.df[col] - self.df[col].mean()) / self.df[col].std())
-                outliers = (z_scores > 3).sum()
+            elif methode == 'zscore':
+                z_werte = np.abs((self.df[spalte] - self.df[spalte].mean()) / self.df[spalte].std())
+                ausreisser = (z_werte > 3).sum()
             
-            if outliers > 0:
-                pct = (outliers / len(self.df)) * 100
-                logger.info(f"  {col}: {outliers} outliers ({pct:.2f}%)")
-                self.cleaning_report.append(f"Outliers in {col}: {outliers} ({pct:.2f}%)")
+            if ausreisser > 0:
+                proz = (ausreisser / len(self.df)) * 100
+                logger.info(f"  {spalte}: {ausreisser} Ausreißer ({proz:.2f}%)")
+                self.bereinigungsbericht.append(f"Ausreißer in {spalte}: {ausreisser} ({proz:.2f}%)")
     
-    def standardize_column_names(self):
-        """Standardize column names (lowercase, underscores)."""
-        original_cols = self.df.columns.tolist()
+    def spaltennamen_standardisieren(self):
+        """Spaltennamen standardisieren (Kleinbuchstaben, Unterstriche)."""
+        original_spalten = self.df.columns.tolist()
         self.df.columns = self.df.columns.str.lower().str.replace(' ', '_').str.replace('-', '_')
-        new_cols = self.df.columns.tolist()
+        neue_spalten = self.df.columns.tolist()
         
-        if original_cols != new_cols:
-            logger.info("Column names standardized")
-            self.cleaning_report.append("Column names standardized")
+        if original_spalten != neue_spalten:
+            logger.info("Spaltennamen standardisiert")
+            self.bereinigungsbericht.append("Spaltennamen standardisiert")
     
-    def save_cleaned_data(self):
-        """Save the cleaned dataset."""
-        self.output_path.parent.mkdir(parents=True, exist_ok=True)
-        self.df.to_csv(self.output_path, index=False)
-        logger.info(f"Cleaned data saved to {self.output_path}")
-        logger.info(f"Final shape: {self.df.shape[0]} rows, {self.df.shape[1]} columns")
-        self.cleaning_report.append(f"Final shape: {self.df.shape}")
+    def bereinigte_daten_speichern(self):
+        """Bereinigten Datensatz speichern."""
+        self.ausgabe_pfad.parent.mkdir(parents=True, exist_ok=True)
+        self.df.to_csv(self.ausgabe_pfad, index=False)
+        logger.info(f"Bereinigte Daten gespeichert unter {self.ausgabe_pfad}")
+        logger.info(f"Endgültige Form: {self.df.shape[0]} Zeilen, {self.df.shape[1]} Spalten")
+        self.bereinigungsbericht.append(f"Endgültige Form: {self.df.shape}")
     
-    def generate_report(self):
-        """Generate a cleaning report."""
-        report_path = self.output_path.parent / 'cleaning_report.txt'
+    def bericht_erstellen(self):
+        """Bereinigungsbericht erstellen."""
+        bericht_pfad = self.ausgabe_pfad.parent / 'cleaning_report.txt'
         
-        with open(report_path, 'w') as f:
-            f.write("Data Cleaning Report\n")
+        with open(bericht_pfad, 'w') as f:
+            f.write("Datenbereinigungsbericht\n")
             f.write("=" * 50 + "\n\n")
-            for item in self.cleaning_report:
-                f.write(f"{item}\n")
+            for eintrag in self.bereinigungsbericht:
+                f.write(f"{eintrag}\n")
         
-        logger.info(f"Cleaning report saved to {report_path}")
+        logger.info(f"Bereinigungsbericht gespeichert unter {bericht_pfad}")
         
-    def clean(self, missing_strategy='analyze', remove_outliers=False):
+    def bereinigen(self, fehlend_strategie='analysieren', ausreisser_entfernen=False):
         """
-        Execute the full cleaning pipeline.
+        Vollständige Bereinigungs-Pipeline ausführen.
         
         Args:
-            missing_strategy (str): Strategy for handling missing values
-            remove_outliers (bool): Whether to remove outliers
+            fehlend_strategie (str): Strategie zur Behandlung fehlender Werte
+            ausreisser_entfernen (bool): Ob Ausreißer entfernt werden sollen
         """
-        self.load_data()
-        self.standardize_column_names()
-        self.check_duplicates()
-        self.handle_missing_values(strategy=missing_strategy)
-        self.detect_outliers()
-        self.save_cleaned_data()
-        self.generate_report()
+        self.daten_laden()
+        self.spaltennamen_standardisieren()
+        self.duplikate_pruefen()
+        self.fehlende_werte_behandeln(strategie=fehlend_strategie)
+        self.ausreisser_erkennen()
+        self.bereinigte_daten_speichern()
+        self.bericht_erstellen()
         
-        logger.info("Data cleaning completed!")
+        logger.info("Datenbereinigung abgeschlossen!")
 
 
 def main():
-    """Main function to run data cleaning."""
-    # Define paths (update these based on actual file names)
-    base_dir = Path(__file__).parent
-    input_file = base_dir.parent / '2_data_acquisition' / 'raw_data' / 'patient_data.csv'
-    output_file = base_dir.parent / '2_data_acquisition' / 'processed_data' / 'patient_data_cleaned.csv'
+    """Hauptfunktion zur Datenbereinigung."""
+    # Pfade definieren (bei Bedarf anpassen)
+    basis_verz = Path(__file__).parent
+    eingabe_datei = basis_verz.parent / '2_data_acquisition' / 'raw_data' / 'patient_data.csv'
+    ausgabe_datei = basis_verz.parent / '2_data_acquisition' / 'processed_data' / 'patient_data_cleaned.csv'
     
-    # Check if input file exists
-    if not input_file.exists():
-        logger.error(f"Input file not found: {input_file}")
-        logger.error("Please run the data acquisition script first")
-        logger.error("Or update the input_file path in this script")
+    # Prüfen, ob Eingabedatei existiert
+    if not eingabe_datei.exists():
+        logger.error(f"Eingabedatei nicht gefunden: {eingabe_datei}")
+        logger.error("Bitte zuerst das Datenanschaffungs-Skript ausführen")
+        logger.error("Oder den eingabe_datei-Pfad in diesem Skript anpassen")
         return
     
-    # Create cleaner and run cleaning
-    cleaner = DataCleaner(input_file, output_file)
-    cleaner.clean(missing_strategy='impute', remove_outliers=False)
+    # Bereiniger erstellen und Bereinigung durchführen
+    bereiniger = DatenBereiniger(eingabe_datei, ausgabe_datei)
+    bereiniger.bereinigen(fehlend_strategie='imputieren', ausreisser_entfernen=False)
 
 
 if __name__ == '__main__':

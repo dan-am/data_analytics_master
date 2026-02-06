@@ -1,84 +1,72 @@
-# References Directory
+# Referenzen-Verzeichnis
 
-## Overview
-This directory contains reference materials, documentation, and resources related to the project.
+## Überblick
+Dieses Verzeichnis enthält Referenzmaterialien, Dokumentation und Ressourcen zum Projekt.
 
-## Contents
+## Inhalte
 
-### Research Papers
-- Academic papers on patient segmentation
-- Healthcare analytics methodologies
-- Machine learning in healthcare
+### Forschungsarbeiten
+- Wissenschaftliche Arbeiten zur Patientensegmentierung
+- Healthcare-Analytics-Methoden
+- Machine Learning im Gesundheitswesen
 
-### Documentation
-- Dataset documentation
-- Domain knowledge references
-- Technical specifications
+### Dokumentation
+- Datensatz-Dokumentation
+- Fachwissen-Referenzen
+- Technische Spezifikationen
 
-### External Resources
-- Links to relevant articles
-- Tutorial references
-- Best practices guides
+## Empfohlene Referenzen
 
-## Recommended References
-
-### Patient Segmentation
+### Patientensegmentierung
 1. Healthcare Market Segmentation and Its Effect on Service Quality
 2. Data Mining Techniques for Customer Segmentation in Healthcare
 3. Clustering Algorithms for Patient Stratification
 
-### Machine Learning in Healthcare
+### Machine Learning im Gesundheitswesen
 1. Machine Learning for Healthcare: A Review
 2. Predictive Analytics in Healthcare
 3. Ethical Considerations in Healthcare ML
 
-### Data Science Methodology
+### Data-Science-Methodik
 1. CRISP-DM (Cross-Industry Standard Process for Data Mining)
 2. Team Data Science Process (TDSP)
 3. Data Science Project Management
 
-### Technical Resources
-1. Scikit-learn Documentation: https://scikit-learn.org/
-2. Pandas Documentation: https://pandas.pydata.org/
-3. Healthcare Data Standards: HL7, FHIR
+### Technische Ressourcen
+1. Scikit-learn Dokumentation: https://scikit-learn.org/
+2. Pandas Dokumentation: https://pandas.pydata.org/
+3. Healthcare-Datenstandards: HL7, FHIR
 
-## Dataset Information
+## Datensatz-Informationen
 
-**Primary Dataset:**
+**Primärer Datensatz:**
 - Name: Patient Segmentation Data
-- Source: Kaggle
+- Quelle: Kaggle
 - URL: https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data
-- License: [Check Kaggle for license information]
+- Lizenz: [Lizenzinformationen auf Kaggle prüfen]
 
-## Glossary
+## Glossar
 
-**Clustering:** Unsupervised learning technique to group similar data points
+**Clustering:** Unüberwachtes Lernverfahren zur Gruppierung ähnlicher Datenpunkte
 
-**Segmentation:** Dividing a population into distinct groups with similar characteristics
+**Segmentierung:** Aufteilung einer Population in Gruppen mit ähnlichen Merkmalen
 
-**Silhouette Score:** Metric to evaluate clustering quality (-1 to 1, higher is better)
+**Silhouette-Score:** Metrik zur Bewertung der Clustering-Qualität (-1 bis 1, höher ist besser)
 
-**Feature Engineering:** Creating new features from existing data
+**Feature Engineering:** Erstellen neuer Features aus vorhandenen Daten
 
-**PCA:** Principal Component Analysis, dimensionality reduction technique
+**PCA:** Hauptkomponentenanalyse, Verfahren zur Dimensionsreduktion
 
-## Citations
+## Zitation
 
-When using this project or dataset, please cite:
+Bei Verwendung dieses Projekts oder Datensatzes bitte zitieren:
 
 ```
-Dataset:
+Datensatz:
 Abbas, N. (2023). Patient Segmentation Data. Kaggle.
 https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data
 
-Project:
-[Your Name]. (2024). Patient Segmentation Analysis Project.
-Data Analytics Masters Course (DAMI01/DATA01).
+Projekt:
+[Name]. (2024). Patientensegmentierungs-Analyseprojekt.
+Data Analytics Masterstudiengang (DAMI01/DATA01).
 ```
-
-## Additional Notes
-
-- Keep this directory updated with new references
-- Document sources for all external information
-- Maintain academic integrity in all citations
-- Add links to helpful resources discovered during the project
