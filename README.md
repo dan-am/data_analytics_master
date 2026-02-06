@@ -2,6 +2,20 @@
 
 ## Project Overview
 This project implements a comprehensive data analytics workflow for patient segmentation using the [Patient Segmentation Dataset from Kaggle](https://www.kaggle.com/datasets/nudratabbas/patient-segmentation-data).
+## 📚 Resources
+
+### Dataset Recommendations
+Looking for interesting datasets for your seminar paper? Check out our comprehensive guide:
+
+**[Dataset Recommendations Guide](dataset_recommendations.md)** - Curated datasets for:
+- 🔍 Clustering Analysis
+- 🛒 Market Basket Analysis (Warenkorbanalyse)
+- 💰 Financial Data & KYC Analysis
+- 🎯 Classification Tasks
+
+The guide focuses on less commonly used but comprehensive datasets suitable for academic work.
+
+## Projects
 
 ## Data Science Life Cycle Phases
 
