@@ -1,7 +1,7 @@
-# Erfolgskriterien für das Patientensegmentierungsprojekt
+# Erfolgskriterien für das Projekt
 
 ## Überblick
-Dieses Dokument definiert die messbaren Erfolgskriterien für das Patientensegmentierungs-Analyseprojekt über alle Phasen des Data-Science-Lebenszyklus hinweg.
+Dieses Dokument definiert die messbaren Erfolgskriterien für das Analyseprojekt über alle Phasen des Data-Science-Lebenszyklus hinweg.
 
 ## Phasenspezifische Erfolgskriterien
 
@@ -12,23 +12,23 @@ Dieses Dokument definiert die messbaren Erfolgskriterien für das Patientensegme
 - [ ] Stakeholder-Anforderungen erhoben
 
 ### Phase 2: Datenanschaffung
-- [ ] Patientensegmentierungs-Datensatz erfolgreich heruntergeladen
-- [ ] Datenquelle mit Metadaten dokumentiert
+- [x] Datensatz erfolgreich heruntergeladen
+- [x] Datenquelle mit Metadaten dokumentiert
 - [ ] Datenwörterbuch erstellt
-- [ ] Erste Datenqualitätsbewertung durchgeführt
 
 ### Phase 3: Datenvorbereitung
-- [ ] Strategie zur Behandlung fehlender Werte implementiert
-- [ ] Ausreißererkennung und -behandlung durchgeführt
-- [ ] Datenvalidierungsregeln angewendet
-- [ ] Bereinigter Datensatz analysefertig
-- [ ] Datenqualitätsbericht erstellt
+- [x] Erste Datenqualitätsbewertung durchgeführt
+- [x] Strategie zur Behandlung fehlender Werte implementiert
+- [x] Ausreißererkennung und -behandlung durchgeführt
+- [x] Datenvalidierungsregeln angewendet
+- [x] Bereinigter Datensatz analysefertig
+- [ ] Datenqualitätsbericht erstellt / Dokumentieren und auch in der Arbeit darstellen
 
 ### Phase 4: Explorative Datenanalyse
-- [ ] Univariate Analyse für alle Features durchgeführt
-- [ ] Bivariate/multivariate Analyse durchgeführt
+- [x] Univariate Analyse für alle Features durchgeführt
+- [x] Bivariate/multivariate Analyse durchgeführt
 - [ ] Wesentliche Muster und Erkenntnisse dokumentiert
-- [ ] Visualisierungs-Dashboard erstellt
+- [-] Visualisierungs-Dashboard erstellt
 - [ ] Statistische Zusammenfassung erstellt
 
 ### Phase 5: Feature Engineering
@@ -78,7 +78,7 @@ Dieses Dokument definiert die messbaren Erfolgskriterien für das Patientensegme
 - **Vollständigkeit:** ≥ 95 % der Datensätze mit vollständigen Informationen
 - **Konsistenz:** 100 % Datentypkonsistenz
 - **Gültigkeit:** 100 % Einhaltung der Validierungsregeln
-- **Eindeutigkeit:** Keine doppelten Patientendatensätze
+- **Eindeutigkeit:** Keine doppelten Datensätze
 
 ## Geschäftsauswirkungsmetriken
 
@@ -89,7 +89,7 @@ Dieses Dokument definiert die messbaren Erfolgskriterien für das Patientensegme
 - [ ] Segmente sind über verschiedene Zufallsseeds stabil
 
 ### Interpretierbarkeit
-- [ ] Klares Profil für jedes Patientensegment
+- [ ] Klares Profil für jedes Segments
 - [ ] Wichtigste Unterscheidungsmerkmale identifiziert
 - [ ] Empfehlungen für jedes Segment bereitgestellt
 - [ ] Visualisierungen unterstützen das Segmentverständnis
@@ -134,7 +134,7 @@ Das Projekt gilt als erfolgreich, wenn:
 
 1. ✅ Alle Phasen des Data-Science-Lebenszyklus abgeschlossen sind
 2. ✅ Die Modellleistung die Mindestanforderungen erfüllt
-3. ✅ Patientensegmente klar definiert und interpretierbar sind
+3. ✅ Segmente klar definiert und interpretierbar sind
 4. ✅ Alle Ergebnisse vollständig und dokumentiert sind
 5. ✅ Code reproduzierbar und gut dokumentiert ist
 6. ✅ Geschäftserkenntnisse umsetzbar sind
